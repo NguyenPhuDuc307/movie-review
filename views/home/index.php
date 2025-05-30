@@ -1,6 +1,14 @@
 <?php include BASE_PATH . '/views/layouts/header.php'; ?>
 
-<!-- Hero Section -->
+<!-- H                    <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">
+                                <i class="bi bi-clock"></i> <?php echo $movie['duration']; ?> phút
+                            </small>
+                            <a href="<?php echo BASE_URL; ?>/movie/detail/<?php echo $movie['id']; ?>" 
+                               class="btn btn-primary btn-sm">
+                                Xem Chi Tiết
+                            </a>
+                        </div>on -->
 <div class="hero-section">
     <div class="container">
         <h1 class="display-4 fw-bold mb-4">
@@ -11,11 +19,11 @@
             Khám phá, đánh giá và thảo luận về những bộ phim tuyệt vời nhất
         </p>
         <div class="d-flex justify-content-center gap-3">
-            <a href="<?php echo BASE_URL; ?>/movies" class="btn btn-primary btn-lg">
+            <a href="<?php echo BASE_URL; ?>/movie" class="btn btn-primary btn-lg">
                 <i class="bi bi-collection-play"></i> Khám Phá Phim
             </a>
             <?php if (!isset($_SESSION['user_id'])): ?>
-                <a href="<?php echo BASE_URL; ?>/register" class="btn btn-outline-light btn-lg">
+                <a href="<?php echo BASE_URL; ?>/auth/register" class="btn btn-outline-light btn-lg">
                     <i class="bi bi-person-plus"></i> Tham Gia Ngay
                 </a>
             <?php endif; ?>
@@ -44,7 +52,7 @@
                     
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">
-                            <a href="<?php echo BASE_URL; ?>/movie?id=<?php echo $movie['id']; ?>" 
+                            <a href="<?php echo BASE_URL; ?>/movie/detail/<?php echo $movie['id']; ?>" 
                                class="text-decoration-none text-light">
                                 <?php echo htmlspecialchars($movie['title']); ?>
                             </a>
@@ -67,7 +75,7 @@
                             <small class="text-muted">
                                 <i class="bi bi-clock"></i> <?php echo $movie['duration']; ?> phút
                             </small>
-                            <a href="<?php echo BASE_URL; ?>/movie?id=<?php echo $movie['id']; ?>" 
+                            <a href="<?php echo BASE_URL; ?>/movie/detail/<?php echo $movie['id']; ?>" 
                                class="btn btn-primary btn-sm">
                                 Xem Chi Tiết
                             </a>
@@ -107,7 +115,7 @@
                     
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">
-                            <a href="<?php echo BASE_URL; ?>/movie?id=<?php echo $movie['id']; ?>" 
+                            <a href="<?php echo BASE_URL; ?>/movie/detail/<?php echo $movie['id']; ?>" 
                                class="text-decoration-none text-light">
                                 <?php echo htmlspecialchars($movie['title']); ?>
                             </a>
@@ -138,7 +146,7 @@
                             <small class="text-muted">
                                 <i class="bi bi-clock"></i> <?php echo $movie['duration']; ?> phút
                             </small>
-                            <a href="<?php echo BASE_URL; ?>/movie?id=<?php echo $movie['id']; ?>" 
+                            <a href="<?php echo BASE_URL; ?>/movie/detail/<?php echo $movie['id']; ?>" 
                                class="btn btn-primary btn-sm">
                                 Xem Chi Tiết
                             </a>
@@ -160,17 +168,17 @@
                 Chia sẻ cảm nhận, thảo luận và khám phá những bộ phim tuyệt vời cùng cộng đồng
             </p>
             <?php if (!isset($_SESSION['user_id'])): ?>
-                <a href="<?php echo BASE_URL; ?>/register" class="btn btn-primary btn-lg me-3">
+                <a href="<?php echo BASE_URL; ?>/auth/register" class="btn btn-primary btn-lg me-3">
                     <i class="bi bi-person-plus"></i> Đăng Ký Ngay
                 </a>
-                <a href="<?php echo BASE_URL; ?>/login" class="btn btn-outline-light btn-lg">
+                <a href="<?php echo BASE_URL; ?>/auth/login" class="btn btn-outline-light btn-lg">
                     <i class="bi bi-box-arrow-in-right"></i> Đăng Nhập
                 </a>
             <?php else: ?>
-                <a href="<?php echo BASE_URL; ?>/movies" class="btn btn-primary btn-lg me-3">
+                <a href="<?php echo BASE_URL; ?>/movie" class="btn btn-primary btn-lg me-3">
                     <i class="bi bi-collection-play"></i> Khám Phá Phim
                 </a>
-                <a href="<?php echo BASE_URL; ?>/discussions" class="btn btn-outline-light btn-lg">
+                <a href="<?php echo BASE_URL; ?>/discussion" class="btn btn-outline-light btn-lg">
                     <i class="bi bi-chat-dots"></i> Tham Gia Thảo Luận
                 </a>
             <?php endif; ?>

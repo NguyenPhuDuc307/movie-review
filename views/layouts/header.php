@@ -268,20 +268,19 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo BASE_URL; ?>/index.php?route=movie">
+                        <a class="nav-link" href="<?php echo BASE_URL; ?>/movie">
                             <i class="bi bi-collection-play"></i> Phim
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo BASE_URL; ?>/discussions">
+                        <a class="nav-link" href="<?php echo BASE_URL; ?>/discussion">
                             <i class="bi bi-chat-dots"></i> Thảo Luận
                         </a>
                     </li>
                 </ul>
                 
                 <!-- Search Form -->
-                <form class="d-flex search-form me-3" method="GET" action="<?php echo BASE_URL; ?>/index.php">
-                    <input type="hidden" name="route" value="movie">
+                <form class="d-flex search-form me-3" method="GET" action="<?php echo BASE_URL; ?>/movie">
                     <input class="form-control me-2" type="search" name="search" placeholder="Tìm kiếm phim..." aria-label="Search" value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>">
                     <button class="btn btn-outline-light" type="submit">
                         <i class="bi bi-search"></i>
@@ -296,26 +295,26 @@
                                 <i class="bi bi-person-circle"></i> <?php echo $_SESSION['full_name']; ?>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark">
-                                <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>/profile">
+                                <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>/user/profile">
                                     <i class="bi bi-person"></i> Hồ Sơ
                                 </a></li>
-                                <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>/my-reviews">
+                                <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>/user/reviews">
                                     <i class="bi bi-star"></i> Reviews Của Tôi
                                 </a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>/logout">
+                                <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>/auth/logout">
                                     <i class="bi bi-box-arrow-right"></i> Đăng Xuất
                                 </a></li>
                             </ul>
                         </li>
                     <?php else: ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo BASE_URL; ?>/login">
+                            <a class="nav-link" href="<?php echo BASE_URL; ?>/auth/login">
                                 <i class="bi bi-box-arrow-in-right"></i> Đăng Nhập
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo BASE_URL; ?>/register">
+                            <a class="nav-link" href="<?php echo BASE_URL; ?>/auth/register">
                                 <i class="bi bi-person-plus"></i> Đăng Ký
                             </a>
                         </li>

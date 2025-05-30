@@ -53,7 +53,7 @@
                                     Thể loại: <?= htmlspecialchars($movie['genre_name'] ?? 'Chưa phân loại') ?>
                                 </small>
                             </p>
-                            <a href="<?= BASE_URL ?>/movie?id=<?= $movie['id'] ?>" class="btn btn-primary">Xem Chi Tiết</a>
+                            <a href="<?= BASE_URL ?>/movie/detail/<?= $movie['id'] ?>" class="btn btn-primary">Xem Chi Tiết</a>
                         </div>
                     </div>
                 </div>

@@ -28,6 +28,7 @@ class Controller {
     
     // Redirect
     protected function redirect($url) {
+        $url = ltrim($url, '/'); // Đảm bảo không có dấu / ở đầu
         header('Location: ' . BASE_URL . '/' . $url);
         exit();
     }
@@ -56,7 +57,7 @@ class Controller {
     protected function requireLogin() {
         if (!$this->isLoggedIn()) {
             $this->setFlash('error', 'Bạn cần đăng nhập để truy cập trang này.');
-            $this->redirect('login');
+            $this->redirect('auth/login');
         }
     }
 }

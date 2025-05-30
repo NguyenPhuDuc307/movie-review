@@ -10,7 +10,7 @@ class ReviewController extends Controller {
         
         if (!$movieId) {
             $this->setFlash('error', 'ID phim không hợp lệ.');
-            $this->redirect('movies');
+            $this->redirect('movie');
         }
         
         $movieModel = $this->model('Movie');
@@ -20,7 +20,7 @@ class ReviewController extends Controller {
         $movie = $movieModel->getById($movieId);
         if (!$movie) {
             $this->setFlash('error', 'Không tìm thấy phim.');
-            $this->redirect('movies');
+            $this->redirect('movie');
         }
         
         // Debug - xem dữ liệu phim
@@ -88,7 +88,7 @@ class ReviewController extends Controller {
                 }
             }
             
-            $this->redirect('movie?id=' . $movie['id']);
+            $this->redirect('movie/detail/' . $movie['id']);
         } else {
             $this->setFlash('error', implode('<br>', $errors));
             $this->redirect('review/write?movie_id=' . $movie['id']);

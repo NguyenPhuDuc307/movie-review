@@ -5,74 +5,88 @@ session_start();
 define('BASE_PATH', __DIR__);
 define('BASE_URL', 'http://localhost/movie-review');
 
-// Include autoloader
+// Include các file cần thiết
 require_once 'config/database.php';
 require_once 'core/Controller.php';
 require_once 'core/Model.php';
 
-// Lấy route từ URL
-$route = isset($_GET['route']) ? $_GET['route'] : 'home';
-$route = rtrim($route, '/');
-$route = filter_var($route, FILTER_SANITIZE_URL);
+// Tạo hệ thống routing mới
+$request_uri = $_SERVER['REQUEST_URI'];
+$base_path = str_replace('/index.php', '', $_SERVER['SCRIPT_NAME']);
 
-// Debug routing (có thể xóa sau khi fix)
-// echo "DEBUG: Route = " . $route . "<br>";
-// echo "DEBUG: GET parameters: "; print_r($_GET); echo "<br>";
+// Loại bỏ base path từ URI
+$uri = str_replace($base_path, '', $request_uri);
+$uri = trim($uri, '/');
 
-// Router sử dụng switch case
-switch($route) {
-    case 'home':
-    case '':
-        require_once 'controllers/HomeController.php';
-        $controller = new HomeController();
-        $controller->index();
-        break;
+// Tách query string (nếu có)
+$query_string = '';
+if (strpos($uri, '?') !== false) {
+    list($uri, $query_string) = explode('?', $uri, 2);
+}
+
+// Phân tích các tham số từ query string
+$_GET = array();
+if (!empty($query_string)) {
+    parse_str($query_string, $_GET);
+}
+
+// Tách route thành các phần
+$uri_parts = explode('/', $uri);
+
+// Route mặc định
+$controller = 'Home'; 
+$action = 'index';
+$params = array();
+
+// Phân tích route
+if (isset($uri_parts[0]) && !empty($uri_parts[0])) {
+    $controller = ucfirst($uri_parts[0]);
+    
+    if (isset($uri_parts[1]) && !empty($uri_parts[1])) {
+        $action = $uri_parts[1];
         
-    case 'login':
-        require_once 'controllers/AuthController.php';
-        $controller = new AuthController();
-        $controller->login();
-        break;
-        
-    case 'register':
-        require_once 'controllers/AuthController.php';
-        $controller = new AuthController();
-        $controller->register();
-        break;
-        
-    case 'logout':
-        require_once 'controllers/AuthController.php';
-        $controller = new AuthController();
-        $controller->logout();
-        break;
-        
-    case 'movie':
-    case 'movies':
-        require_once 'controllers/MovieController.php';
-        $controller = new MovieController();
-        if (isset($_GET['id']) && !empty($_GET['id'])) {
-            $id = (int)$_GET['id'];
-            $controller->detail($id);
-        } else {
-            $controller->index();
+        // Các tham số còn lại là params
+        if (count($uri_parts) > 2) {
+            $params = array_slice($uri_parts, 2);
         }
-        break;
-        
-    case 'profile':
-        require_once 'controllers/UserController.php';
-        $controller = new UserController();
-        $controller->profile();
-        break;
-        
-    case 'review/write':
-        require_once 'controllers/ReviewController.php';
-        $controller = new ReviewController();
-        $controller->write();
-        break;
-        
-    default:
-        // 404 Page
+    }
+}
+
+// Điều chỉnh routing đặc biệt
+if ($controller == 'Movie' && $action == 'index' && isset($_GET['id']) && !empty($_GET['id'])) {
+    $action = 'detail';
+    $params = [(int)$_GET['id']];
+}
+
+// Xử lý trường hợp đặc biệt
+if ($controller == 'Movies') {
+    $controller = 'Movie';
+}
+
+// Debug routing (có thể xóa sau)
+// echo "Controller: $controller, Action: $action, Params: "; print_r($params); echo "<br>";
+// echo "GET params: "; print_r($_GET); echo "<br>";
+
+// Đường dẫn đến file controller
+$controller_file = 'controllers/' . $controller . 'Controller.php';
+
+// Kiểm tra controller tồn tại
+if (file_exists($controller_file)) {
+    require_once $controller_file;
+    
+    $controller_class = $controller . 'Controller';
+    $controller_instance = new $controller_class();
+    
+    // Kiểm tra method tồn tại
+    if (method_exists($controller_instance, $action)) {
+        // Gọi method với params
+        call_user_func_array([$controller_instance, $action], $params);
+    } else {
+        // Method không tồn tại
         require_once 'views/errors/404.php';
-        break;
+    }
+} else {
+    // Controller không tồn tại
+    require_once 'views/errors/404.php';
 }
 ?>

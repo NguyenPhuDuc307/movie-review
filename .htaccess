@@ -4,10 +4,10 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)/$ $1 [R=301,L]
 
-# Handle Angular HTML5 mode for frontend routes
+# Rewrite rule for Clean URLs
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+RewriteRule ^(.*)$ index.php [QSA,L]
 
 # Security: Hide sensitive files
 <Files ~ "^\.">

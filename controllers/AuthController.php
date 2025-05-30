@@ -22,7 +22,7 @@ class AuthController extends Controller {
                 $_SESSION['role'] = $user['role'];
                 
                 $this->setFlash('success', 'Đăng nhập thành công!');
-                $this->redirect('home');
+                $this->redirect('');
             } else {
                 $this->setFlash('error', 'Tên đăng nhập hoặc mật khẩu không đúng.');
             }
@@ -89,7 +89,7 @@ class AuthController extends Controller {
                     
                     if ($userModel->register($data)) {
                         $this->setFlash('success', 'Đăng ký thành công! Vui lòng đăng nhập.');
-                        $this->redirect('login');
+                        $this->redirect('auth/login');
                     } else {
                         $this->setFlash('error', 'Có lỗi xảy ra. Vui lòng thử lại.');
                     }
@@ -106,7 +106,7 @@ class AuthController extends Controller {
     
     public function logout() {
         session_destroy();
-        $this->redirect('home');
+        $this->redirect('');
     }
 }
 ?>

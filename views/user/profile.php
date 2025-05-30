@@ -138,7 +138,7 @@
                             </div>
                             <div class="flex-grow-1">
                                 <h6 class="mb-1">
-                                    <a href="<?php echo BASE_URL; ?>/movie?id=<?php echo $review['movie_id']; ?>" 
+                                    <a href="<?php echo BASE_URL; ?>/movie/detail/<?php echo $review['movie_id']; ?>" 
                                        class="text-decoration-none text-primary">
                                         <?php echo htmlspecialchars($review['movie_title']); ?>
                                     </a>
@@ -227,7 +227,7 @@
                                         </div>
                                         <div class="flex-grow-1">
                                             <h5 class="mb-2">
-                                                <a href="<?php echo BASE_URL; ?>/movie?id=<?php echo $review['movie_id']; ?>" 
+                                                <a href="<?php echo BASE_URL; ?>/movie/detail/<?php echo $review['movie_id']; ?>" 
                                                    class="text-decoration-none text-primary">
                                                     <?php echo htmlspecialchars($review['movie_title']); ?>
                                                 </a>

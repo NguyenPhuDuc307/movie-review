@@ -67,7 +67,7 @@
                         </div>
                         
                         <div class="d-flex justify-content-between">
-                            <a href="<?= BASE_URL ?>/movie?id=<?= $movie['id'] ?>" class="btn btn-secondary">Hủy</a>
+                            <a href="<?= BASE_URL ?>/movie/detail/<?= $movie['id'] ?>" class="btn btn-secondary">Hủy</a>
                             <button type="submit" class="btn btn-primary">
                                 <?= $existingReview ? 'Cập Nhật Review' : 'Gửi Review' ?>
                             </button>

@@ -57,7 +57,7 @@
         </div>
     <?php else: ?>
         <div class="alert alert-info">
-            <a href="<?= BASE_URL ?>/login">Đăng nhập</a> để viết review cho phim này.
+            <a href="<?= BASE_URL ?>/auth/login">Đăng nhập</a> để viết review cho phim này.
         </div>
     <?php endif; ?>
     
