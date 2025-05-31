@@ -176,6 +176,63 @@ movie-review/
 - Desktop enhancement
 - Cross-browser compatibility
 
+## 🔗 URL Routing System
+
+### URL Patterns được hỗ trợ:
+
+#### Trang chủ:
+- `/` hoặc `/home` - Trang chủ
+
+#### Phim:
+- `/movie` hoặc `/movies` - Danh sách phim
+- `/movie?search=keyword` - Tìm kiếm phim
+- `/movie?genre=action` - Lọc theo thể loại
+- `/movie/123` hoặc `/movie/detail/123` - Chi tiết phim với ID 123
+
+#### Review:
+- `/review/write/123` - Viết review cho phim ID 123
+
+#### Thảo luận:
+- `/discussion` hoặc `/discussions` - Danh sách thảo luận
+- `/discussion?search=keyword` - Tìm kiếm thảo luận
+- `/discussion?movie_id=123` - Thảo luận về phim ID 123
+- `/discussion/123` hoặc `/discussion/detail/123` - Chi tiết thảo luận ID 123
+- `/discussion/create` - Tạo thảo luận mới
+- `/discussion/create?movie_id=123` - Tạo thảo luận cho phim ID 123
+
+#### Người dùng:
+- `/user/profile` hoặc `/profile` - Hồ sơ người dùng
+- `/user/reviews` - Reviews của người dùng
+
+#### Xác thực:
+- `/auth/login` hoặc `/login` - Đăng nhập
+- `/auth/register` hoặc `/register` - Đăng ký
+- `/auth/logout` hoặc `/logout` - Đăng xuất
+
+### Sử dụng URLHelper trong code:
+
+```php
+// Thay vì hardcode URL:
+echo '<a href="' . BASE_URL . '/movie/detail/' . $movie['id'] . '">Chi tiết</a>';
+
+// Sử dụng URLHelper:
+echo '<a href="' . URLHelper::movieDetail($movie['id']) . '">Chi tiết</a>';
+```
+
+### Các phương thức URLHelper có sẵn:
+- `URLHelper::home()` - Trang chủ
+- `URLHelper::movies($search, $genre)` - Danh sách phim
+- `URLHelper::movieDetail($movieId)` - Chi tiết phim
+- `URLHelper::writeReview($movieId)` - Viết review
+- `URLHelper::discussions($search, $movie_id)` - Danh sách thảo luận
+- `URLHelper::discussionDetail($discussionId)` - Chi tiết thảo luận
+- `URLHelper::createDiscussion($movieId)` - Tạo thảo luận
+- `URLHelper::userProfile()` - Hồ sơ người dùng
+- `URLHelper::userReviews()` - Reviews của người dùng
+- `URLHelper::login()`, `URLHelper::register()`, `URLHelper::logout()` - Xác thực
+- `URLHelper::poster($filename)` - URL poster phim
+- `URLHelper::isActive($path)` - Kiểm tra active navigation
+
 ---
 
 *Dự án được phát triển như một phần của khóa học lập trình web, nhằm tạo ra một nền tảng hoàn chỉnh cho cộng đồng yêu phim.*

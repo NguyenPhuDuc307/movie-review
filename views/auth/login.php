@@ -10,7 +10,7 @@
                 </h3>
             </div>
             <div class="card-body p-4">
-                <form method="POST" action="<?php echo BASE_URL; ?>/auth/login">
+                <form method="POST" action="<?= URLHelper::login() ?>">
                     <div class="mb-3">
                         <label for="username" class="form-label">
                             <i class="bi bi-person"></i> Tên đăng nhập hoặc Email

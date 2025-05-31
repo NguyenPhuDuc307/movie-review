@@ -64,6 +64,12 @@
             border-radius: 6px;
         }
         
+        .navbar-nav .nav-link.active {
+            color: var(--accent-color) !important;
+            background-color: var(--hover-bg);
+            border-radius: 6px;
+        }
+        
         .btn-primary {
             background-color: var(--accent-color);
             border-color: var(--accent-color);
@@ -635,7 +641,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-            <a class="navbar-brand" href="<?php echo BASE_URL; ?>">
+            <a class="navbar-brand" href="<?php echo URLHelper::home(); ?>">
                 <i class="bi bi-film"></i> MovieReview
             </a>
             
@@ -646,24 +652,24 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo BASE_URL; ?>">
+                        <a class="nav-link <?php echo URLHelper::isActive('') ? 'active' : ''; ?>" href="<?php echo URLHelper::home(); ?>">
                             <i class="bi bi-house"></i> Trang Chủ
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo BASE_URL; ?>/movie">
+                        <a class="nav-link <?php echo URLHelper::isActive('movie') ? 'active' : ''; ?>" href="<?php echo URLHelper::movies(); ?>">
                             <i class="bi bi-collection-play"></i> Phim
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo BASE_URL; ?>/discussion">
+                        <a class="nav-link <?php echo URLHelper::isActive('discussion') ? 'active' : ''; ?>" href="<?php echo URLHelper::discussions(); ?>">
                             <i class="bi bi-chat-dots"></i> Thảo Luận
                         </a>
                     </li>
                 </ul>
                 
                 <!-- Search Form -->
-                <form class="d-flex search-form me-3" method="GET" action="<?php echo BASE_URL; ?>/movie">
+                <form class="d-flex search-form me-3" method="GET" action="<?php echo URLHelper::movies(); ?>">
                     <input class="form-control me-2" type="search" name="search" placeholder="Tìm kiếm phim..." aria-label="Search" value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>">
                     <button class="btn btn-outline-light" type="submit">
                         <i class="bi bi-search"></i>
@@ -678,26 +684,26 @@
                                 <i class="bi bi-person-circle"></i> <?php echo $_SESSION['full_name']; ?>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark">
-                                <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>/user/profile">
+                                <li><a class="dropdown-item" href="<?php echo URLHelper::userProfile(); ?>">
                                     <i class="bi bi-person"></i> Hồ Sơ
                                 </a></li>
-                                <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>/user/reviews">
+                                <li><a class="dropdown-item" href="<?php echo URLHelper::userReviews(); ?>">
                                     <i class="bi bi-star"></i> Reviews Của Tôi
                                 </a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="<?php echo BASE_URL; ?>/auth/logout">
+                                <li><a class="dropdown-item" href="<?php echo URLHelper::logout(); ?>">
                                     <i class="bi bi-box-arrow-right"></i> Đăng Xuất
                                 </a></li>
                             </ul>
                         </li>
                     <?php else: ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo BASE_URL; ?>/auth/login">
+                            <a class="nav-link" href="<?php echo URLHelper::login(); ?>">
                                 <i class="bi bi-box-arrow-in-right"></i> Đăng Nhập
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="<?php echo BASE_URL; ?>/auth/register">
+                            <a class="nav-link" href="<?php echo URLHelper::register(); ?>">
                                 <i class="bi bi-person-plus"></i> Đăng Ký
                             </a>
                         </li>

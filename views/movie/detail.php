@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-4">
             <?php if (!empty($movie['poster']) && file_exists(BASE_PATH . '/uploads/posters/' . $movie['poster'])): ?>
-                <img src="<?= BASE_URL ?>/uploads/posters/<?= $movie['poster'] ?>" 
+                <img src="<?= URLHelper::poster($movie['poster']) ?>" 
                      class="img-fluid" alt="<?= htmlspecialchars($movie['title']) ?>" 
                      style="max-height: 400px; object-fit: cover;">
             <?php else: ?>
@@ -45,19 +45,19 @@
     <?php if (isset($_SESSION['user_id'])): ?>
         <div class="review-actions mb-4">
             <?php if ($userReview): ?>
-                <a href="<?= BASE_URL ?>/review/write?movie_id=<?= $movie['id'] ?>" class="btn btn-warning">
+                <a href="<?= URLHelper::writeReview($movie['id']) ?>" class="btn btn-warning">
                     <i class="fas fa-edit"></i> Chỉnh Sửa Review Của Bạn
                 </a>
                 <span class="text-muted ms-2">Bạn đã review phim này</span>
             <?php else: ?>
-                <a href="<?= BASE_URL ?>/review/write?movie_id=<?= $movie['id'] ?>" class="btn btn-success">
+                <a href="<?= URLHelper::writeReview($movie['id']) ?>" class="btn btn-success">
                     <i class="fas fa-edit"></i> Viết Review
                 </a>
             <?php endif; ?>
         </div>
     <?php else: ?>
         <div class="alert alert-info">
-            <a href="<?= BASE_URL ?>/auth/login">Đăng nhập</a> để viết review cho phim này.
+            <a href="<?= URLHelper::login() ?>">Đăng nhập</a> để viết review cho phim này.
         </div>
     <?php endif; ?>
     

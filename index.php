@@ -9,6 +9,7 @@ define('BASE_URL', 'http://localhost/movie-review');
 require_once 'config/database.php';
 require_once 'core/Controller.php';
 require_once 'core/Model.php';
+require_once 'core/URLHelper.php';
 
 // Tạo hệ thống routing mới
 $request_uri = $_SERVER['REQUEST_URI'];
@@ -25,9 +26,9 @@ if (strpos($uri, '?') !== false) {
 }
 
 // Phân tích các tham số từ query string
-$_GET = array();
 if (!empty($query_string)) {
-    parse_str($query_string, $_GET);
+    parse_str($query_string, $additional_params);
+    $_GET = array_merge($_GET, $additional_params);
 }
 
 // Tách route thành các phần
@@ -52,31 +53,60 @@ if (isset($uri_parts[0]) && !empty($uri_parts[0])) {
     }
 }
 
-// Điều chỉnh routing đặc biệt
-if ($controller == 'Movie' && $action == 'index' && isset($_GET['id']) && !empty($_GET['id'])) {
-    $action = 'detail';
-    $params = [(int)$_GET['id']];
-}
-
-// Xử lý trường hợp đặc biệt
-if ($controller == 'Movies') {
-    $controller = 'Movie';
+// Routing đặc biệt cho các patterns phổ biến
+switch ($controller) {
+    case 'Movie':
+        // /movie/123 -> movie/detail/123
+        if (is_numeric($action)) {
+            $params = [$action];
+            $action = 'detail';
+        }
+        // /movie/detail/123
+        elseif ($action === 'detail' && isset($params[0])) {
+            $params[0] = (int)$params[0];
+        }
+        break;
+        
+    case 'Discussion':
+        // /discussion/123 -> discussion/detail/123
+        if (is_numeric($action)) {
+            $params = [$action];
+            $action = 'detail';
+        }
+        // /discussion/detail/123
+        elseif ($action === 'detail' && isset($params[0])) {
+            $params[0] = (int)$params[0];
+        }
+        break;
+        
+    case 'Review':
+        // /review/write/123
+        if ($action === 'write' && isset($params[0])) {
+            $params[0] = (int)$params[0];
+        }
+        break;
+        
+    case 'User':
+        // Các action cho user
+        break;
+        
+    case 'Auth':
+        // Các action cho authentication
+        break;
 }
 
 // Routing shortcuts cho các trang phổ biến
-if ($controller == 'Login') {
-    $controller = 'Auth';
-    $action = 'login';
-}
+$shortcuts = [
+    'login' => ['Auth', 'login'],
+    'register' => ['Auth', 'register'],
+    'logout' => ['Auth', 'logout'],
+    'movies' => ['Movie', 'index'],
+    'discussions' => ['Discussion', 'index'],
+    'profile' => ['User', 'profile']
+];
 
-if ($controller == 'Register') {
-    $controller = 'Auth';
-    $action = 'register';
-}
-
-if ($controller == 'Logout') {
-    $controller = 'Auth';
-    $action = 'logout';
+if (isset($shortcuts[$controller])) {
+    list($controller, $action) = $shortcuts[$controller];
 }
 
 // Debug routing (có thể xóa sau)

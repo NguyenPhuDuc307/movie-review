@@ -32,7 +32,7 @@
                 <div class="col-md-3 mb-4">
                     <div class="card">
                         <?php if (!empty($movie['poster']) && file_exists(BASE_PATH . '/uploads/posters/' . $movie['poster'])): ?>
-                            <img src="<?= BASE_URL ?>/uploads/posters/<?= $movie['poster'] ?>" 
+                            <img src="<?= URLHelper::poster($movie['poster']) ?>" 
                                  class="card-img-top" alt="<?= htmlspecialchars($movie['title']) ?>" 
                                  style="height: 300px; object-fit: cover;">
                         <?php else: ?>
@@ -53,7 +53,7 @@
                                     Thể loại: <?= htmlspecialchars($movie['genre_name'] ?? 'Chưa phân loại') ?>
                                 </small>
                             </p>
-                            <a href="<?= BASE_URL ?>/movie/detail/<?= $movie['id'] ?>" class="btn btn-primary">Xem Chi Tiết</a>
+                            <a href="<?= URLHelper::movieDetail($movie['id']) ?>" class="btn btn-primary">Xem Chi Tiết</a>
                         </div>
                     </div>
                 </div>

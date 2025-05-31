@@ -13,7 +13,7 @@
                         <div class="row align-items-center">
                             <div class="col-auto">
                                 <?php if (!empty($movie['poster']) && file_exists(BASE_PATH . '/uploads/posters/' . $movie['poster'])): ?>
-                                    <img src="<?= BASE_URL ?>/uploads/posters/<?= $movie['poster'] ?>" 
+                                    <img src="<?= URLHelper::poster($movie['poster']) ?>" 
                                          class="rounded" alt="<?= htmlspecialchars($movie['title']) ?>" 
                                          style="width: 100px; height: 120px; object-fit: cover;">
                                 <?php else: ?>
@@ -67,7 +67,7 @@
                         </div>
                         
                         <div class="d-flex justify-content-between">
-                            <a href="<?= BASE_URL ?>/movie/detail/<?= $movie['id'] ?>" class="btn btn-secondary">Hủy</a>
+                            <a href="<?= URLHelper::movieDetail($movie['id']) ?>" class="btn btn-secondary">Hủy</a>
                             <button type="submit" class="btn btn-primary">
                                 <?= $existingReview ? 'Cập Nhật Review' : 'Gửi Review' ?>
                             </button>
