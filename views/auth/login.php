@@ -10,7 +10,7 @@
                 </h3>
             </div>
             <div class="card-body p-4">
-                <form method="POST" action="<?php echo BASE_URL; ?>/login">
+                <form method="POST" action="<?php echo BASE_URL; ?>/auth/login">
                     <div class="mb-3">
                         <label for="username" class="form-label">
                             <i class="bi bi-person"></i> Tên đăng nhập hoặc Email
@@ -61,7 +61,7 @@
                 
                 <div class="text-center">
                     <p class="mb-2">Chưa có tài khoản?</p>
-                    <a href="<?php echo BASE_URL; ?>/register" class="btn btn-outline-light">
+                    <a href="<?php echo BASE_URL; ?>/auth/register" class="btn btn-outline-light">
                         <i class="bi bi-person-plus"></i> Đăng Ký Ngay
                     </a>
                 </div>

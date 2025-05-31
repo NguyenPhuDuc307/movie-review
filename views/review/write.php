@@ -9,7 +9,7 @@
                 </div>
                 <div class="card-body">
                     <!-- Thông tin phim -->
-                    <div class="movie-info mb-3 p-3 bg-light rounded">
+                    <div class="movie-info mb-3 p-3 rounded" style="background-color: var(--bg-tertiary); border: 1px solid var(--border-color);">
                         <div class="row align-items-center">
                             <div class="col-auto">
                                 <?php if (!empty($movie['poster']) && file_exists(BASE_PATH . '/uploads/posters/' . $movie['poster'])): ?>
@@ -27,12 +27,12 @@
                                 <?php endif; ?>
                             </div>
                             <div class="col">
-                                <h5 class="mb-1"><?= htmlspecialchars($movie['title'] ?? 'Không có tiêu đề') ?></h5>
-                                <p class="text-muted mb-1"><small>Năm: <?= $movie['release_year'] ?? 'Không rõ' ?></small></p>
+                                <h5 class="mb-1" style="color: var(--text-primary);"><?= htmlspecialchars($movie['title'] ?? 'Không có tiêu đề') ?></h5>
+                                <p class="mb-1" style="color: var(--text-secondary);"><small>Năm: <?= $movie['release_year'] ?? 'Không rõ' ?></small></p>
                                 <?php if (!empty($movie['description'])): ?>
-                                    <p class="mb-0 text-muted"><small><?= substr(htmlspecialchars($movie['description']), 0, 100) ?>...</small></p>
+                                    <p class="mb-0" style="color: var(--text-secondary);"><small><?= substr(htmlspecialchars($movie['description']), 0, 100) ?>...</small></p>
                                 <?php else: ?>
-                                    <p class="mb-0 text-muted"><small>Chưa có mô tả</small></p>
+                                    <p class="mb-0" style="color: var(--text-secondary);"><small>Chưa có mô tả</small></p>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -43,7 +43,7 @@
                         <div class="mb-3">
                             <label class="form-label">Đánh giá <span class="text-danger">*</span></label>
                             <div class="rating-input mb-2">
-                                <?php for ($i = 1; $i <= 5; $i++): ?>
+                                <?php for ($i = 5; $i >= 1; $i--): ?>
                                     <input type="radio" id="star<?= $i ?>" name="rating" value="<?= $i ?>" 
                                            <?= ($existingReview && $existingReview['rating'] == $i) ? 'checked' : '' ?> required>
                                     <label for="star<?= $i ?>" class="star-label">★</label>
@@ -78,48 +78,5 @@
         </div>
     </div>
 </div>
-
-<style>
-.rating-input {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-}
-
-.rating-input input[type="radio"] {
-    display: none;
-}
-
-.star-label {
-    font-size: 2rem;
-    color: #ddd;
-    cursor: pointer;
-    transition: color 0.2s;
-    margin-right: 5px;
-}
-
-.rating-input input[type="radio"]:checked ~ .star-label {
-    color: #ffc107;
-}
-
-.rating-input input[type="radio"]:checked + .star-label {
-    color: #ffc107;
-}
-
-.star-label:hover,
-.star-label:hover ~ .star-label {
-    color: #ffc107;
-}
-
-/* Hiệu ứng hover từ trái sang phải */
-.rating-input:hover .star-label {
-    color: #ddd;
-}
-
-.rating-input .star-label:hover,
-.rating-input .star-label:hover ~ .star-label {
-    color: #ffc107;
-}
-</style>
 
 <?php include 'views/layouts/footer.php'; ?>

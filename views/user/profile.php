@@ -145,7 +145,7 @@
                                 </h6>
                                 <div class="rating-stars mb-1">
                                     <?php for ($i = 1; $i <= 5; $i++): ?>
-                                        <i class="bi bi-star<?php echo $i <= $review['rating'] ? '-fill' : ''; ?> text-warning"></i>
+                                        <i class="bi bi-star<?php echo $i <= $review['rating'] ? '-fill text-warning' : ' text-muted'; ?>"></i>
                                     <?php endfor; ?>
                                 </div>
                                 <p class="text-muted mb-1"><?php echo htmlspecialchars($review['title']); ?></p>
@@ -234,7 +234,7 @@
                                             </h5>
                                             <div class="rating-stars mb-2">
                                                 <?php for ($i = 1; $i <= 5; $i++): ?>
-                                                    <i class="bi bi-star<?php echo $i <= $review['rating'] ? '-fill' : ''; ?> text-warning"></i>
+                                                    <i class="bi bi-star<?php echo $i <= $review['rating'] ? '-fill text-warning' : ' text-muted'; ?>"></i>
                                                 <?php endfor; ?>
                                                 <span class="ms-2 text-muted"><?php echo $review['rating']; ?>/5</span>
                                             </div>

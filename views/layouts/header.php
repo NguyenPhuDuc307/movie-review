@@ -11,6 +11,9 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <!-- Custom CSS -->
     <style>
         :root {
@@ -88,23 +91,17 @@
             border: 1px solid var(--border-color);
             color: var(--text-primary) !important;
         }
-        
+
         .card-body {
             color: var(--text-primary) !important;
         }
-        
+
         .card-title {
             color: var(--text-primary) !important;
         }
-        
+
         .card-text {
             color: var(--text-secondary) !important;
-        }
-        
-        .card:hover {
-            border-color: var(--accent-color);
-            transform: translateY(-2px);
-            transition: all 0.3s ease;
         }
         
         .form-control {
@@ -141,15 +138,6 @@
             transition: all 0.3s ease;
             border-radius: 12px;
             overflow: hidden;
-        }
-        
-        .movie-card .card-title a {
-            color: var(--text-primary) !important;
-            text-decoration: none;
-        }
-        
-        .movie-card .card-title a:hover {
-            color: var(--accent-color) !important;
         }
         
         .movie-poster {
@@ -245,6 +233,401 @@
         /* Small text fixes */
         small {
             color: var(--text-secondary) !important;
+        }
+        
+        /* Discussion specific styles */
+        .container {
+            color: var(--text-primary) !important;
+        }
+        
+        .text-muted {
+            color: var(--text-secondary) !important;
+        }
+        
+        .card-text.text-muted {
+            color: var(--text-secondary) !important;
+        }
+        
+        .small.text-muted {
+            color: var(--text-secondary) !important;
+        }
+        
+        /* Form controls */
+        .form-control::placeholder {
+            color: var(--text-secondary);
+        }
+        
+        .form-label {
+            color: var(--text-primary) !important;
+        }
+        
+        .form-text {
+            color: var(--text-secondary) !important;
+        }
+        
+        /* Alert improvements */
+        .alert-info {
+            background-color: #1e3a5f;
+            color: #58a6ff;
+            border-left: 4px solid #58a6ff;
+        }
+        
+        /* Link colors - chỉ áp dụng cho specific links */
+        .discussion-title a {
+            color: #58a6ff !important;
+        }
+        
+        .discussion-title a:hover {
+            color: var(--accent-color) !important;
+        }
+        
+        .card-title a {
+            color: var(--text-primary) !important;
+            text-decoration: none;
+        }
+        
+        .card-title a:hover {
+            color: var(--accent-color) !important;
+        }
+        
+        /* Discussion System CSS Fixes */
+        .container * {
+            color: #f0f6fc !important;
+        }
+
+        .text-muted, .small.text-muted {
+            color: #8b949e !important;
+        }
+
+        h2, h3, h4, h5, h6 {
+            color: #f0f6fc !important;
+        }
+
+        .form-label {
+            color: #f0f6fc !important;
+        }
+
+        .form-control {
+            background-color: #21262d !important;
+            border: 1px solid #30363d !important;
+            color: #f0f6fc !important;
+        }
+
+        .form-control::placeholder {
+            color: #8b949e !important;
+        }
+
+        .btn {
+            color: white !important;
+        }
+
+        .alert-info {
+            background-color: #1e3a5f !important;
+            color: #58a6ff !important;
+            border-left: 4px solid #58a6ff !important;
+        }
+
+        .alert-warning {
+            background-color: #5d4e00 !important;
+            color: #ffdf5d !important;
+            border-left: 4px solid #ffdf5d !important;
+        }
+
+        .card {
+            background-color: #161b22 !important;
+            border: 1px solid #30363d !important;
+        }
+
+        .card-header {
+            background-color: #161b22 !important;
+            border-bottom: 1px solid #30363d !important;
+            color: #f0f6fc !important;
+        }
+
+        .card-body {
+            background-color: #161b22 !important;
+            color: #f0f6fc !important;
+        }
+
+        .comment {
+            background-color: #21262d !important;
+            border: 1px solid #30363d !important;
+        }
+
+        .comment:hover {
+            background-color: #30363d !important;
+        }
+
+        .discussion-content {
+            color: #f0f6fc !important;
+        }
+
+        .comment-content {
+            color: #f0f6fc !important;
+        }
+
+        /* Sửa màu nút và icon */
+        .btn-outline-danger {
+            color: #f85149 !important;
+            border-color: #f85149 !important;
+            background-color: transparent !important;
+        }
+
+        .btn-outline-danger:hover {
+            color: #ffffff !important;
+            background-color: #f85149 !important;
+            border-color: #f85149 !important;
+        }
+
+        .btn-outline-secondary {
+            color: #8b949e !important;
+            border-color: #30363d !important;
+            background-color: transparent !important;
+        }
+
+        .btn-outline-secondary:hover {
+            color: #ffffff !important;
+            background-color: #30363d !important;
+            border-color: #30363d !important;
+        }
+
+        .btn-primary {
+            background-color: #238636 !important;
+            border-color: #238636 !important;
+            color: #ffffff !important;
+        }
+
+        .btn-primary:hover {
+            background-color: #2ea043 !important;
+            border-color: #2ea043 !important;
+            color: #ffffff !important;
+        }
+
+        /* Sửa màu cho các elements khác */
+        strong {
+            color: #f0f6fc !important;
+        }
+
+        .fas, .fa {
+            color: inherit !important;
+        }
+
+        /* CSS cho rating stars - màu vàng (chỉ cho display, không ảnh hưởng input) */
+        .star-rating .star {
+            color: #ffd700 !important; /* Màu vàng cho ngôi sao */
+            font-size: 1.2em;
+        }
+
+        .star-rating .star.filled {
+            color: #ffd700 !important; /* Màu vàng cho ngôi sao đã chọn */
+        }
+
+        .star-rating .star.empty {
+            color: #30363d !important; /* Màu xám cho ngôi sao trống */
+        }
+
+        /* CSS cho display stars (chỉ hiển thị) */
+        .rating-display .star,
+        .rating-stars .star {
+            color: #ffd700 !important; /* Màu vàng */
+        }
+
+        /* Specific for Bootstrap icons - chỉ cho display */
+        .bi-star,
+        .bi-star-fill,
+        .bi-star-half {
+            color: #ffd700 !important;
+        }
+
+        /* CSS cho interactive rating input - ưu tiên cao nhất */
+        .rating-input {
+            display: flex !important;
+            flex-direction: row-reverse !important;
+            justify-content: flex-end !important;
+        }
+
+        .rating-input input[type="radio"] {
+            display: none !important;
+        }
+
+        .rating-input .star-label {
+            font-size: 2rem !important;
+            color: #ddd !important;
+            cursor: pointer !important;
+            transition: color 0.2s !important;
+            margin-left: 5px !important;
+            order: 1 !important;
+            pointer-events: auto !important;
+        }
+
+        /* Khi radio được chọn, tô màu vàng cho nó và tất cả các sao trước đó */
+        .rating-input input[type="radio"]:checked ~ input[type="radio"] + .star-label,
+        .rating-input input[type="radio"]:checked + .star-label {
+            color: #ffc107 !important;
+        }
+
+        /* Hiệu ứng hover */
+        .rating-input .star-label:hover,
+        .rating-input .star-label:hover ~ .star-label {
+            color: #ffc107 !important;
+        }
+
+        /* Reset màu khi không hover */
+        .rating-input:not(:hover) .star-label {
+            color: #ddd !important;
+        }
+
+        /* Tô màu các sao đã chọn khi không hover */
+        .rating-input:not(:hover) input[type="radio"]:checked ~ input[type="radio"] + .star-label,
+        .rating-input:not(:hover) input[type="radio"]:checked + .star-label {
+            color: #ffc107 !important;
+        }
+        
+        /* Search and filter form */
+        .search-form .form-select {
+            background-color: #21262d !important;
+            border: 1px solid #30363d !important;
+            color: #f0f6fc !important;
+        }
+
+        .search-form .form-select option {
+            background-color: #21262d !important;
+            color: #f0f6fc !important;
+        }
+
+        /* Discussion list items */
+        .discussion-item {
+            background-color: #21262d !important;
+            border: 1px solid #30363d !important;
+        }
+
+        .discussion-item:hover {
+            background-color: #30363d !important;
+        }
+
+        .discussion-title a {
+            color: #58a6ff !important;
+        }
+
+        /* Tab Navigation Fixes */
+        .nav-tabs {
+            border-bottom: 1px solid #30363d !important;
+        }
+
+        .nav-tabs .nav-link {
+            background-color: #21262d !important;
+            border: 1px solid #30363d !important;
+            color: #8b949e !important;
+            margin-bottom: -1px;
+        }
+
+        .nav-tabs .nav-link:hover {
+            background-color: #30363d !important;
+            color: #f0f6fc !important;
+            border-color: #30363d !important;
+        }
+
+        .nav-tabs .nav-link.active {
+            background-color: #f85149 !important;
+            color: #ffffff !important;
+            border-color: #f85149 !important;
+            border-bottom-color: #f85149 !important;
+        }
+
+        .nav-tabs .nav-link.active:hover {
+            background-color: #da3633 !important;
+            color: #ffffff !important;
+            border-color: #da3633 !important;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            background-color: transparent !important;
+        }
+
+        .tab-pane {
+            color: #f0f6fc !important;
+        }
+
+        /* Form và input styles cho dark theme */
+        .form-control {
+            background-color: var(--bg-tertiary) !important;
+            border: 1px solid var(--border-color) !important;
+            color: var(--text-primary) !important;
+        }
+
+        .form-control:focus {
+            background-color: var(--bg-tertiary) !important;
+            border-color: var(--accent-color) !important;
+            color: var(--text-primary) !important;
+            box-shadow: 0 0 0 0.2rem rgba(248, 81, 73, 0.25) !important;
+        }
+
+        .form-control::placeholder {
+            color: var(--text-secondary) !important;
+        }
+
+        .form-label {
+            color: var(--text-primary) !important;
+        }
+
+        .form-text {
+            color: var(--text-secondary) !important;
+        }
+
+        /* Movie info card styles */
+        .movie-info {
+            background-color: var(--bg-tertiary) !important;
+            border: 1px solid var(--border-color) !important;
+        }
+
+        .movie-info h5,
+        .movie-info p {
+            color: var(--text-primary) !important;
+        }
+
+        .movie-info .text-muted,
+        .movie-info small {
+            color: var(--text-secondary) !important;
+        }
+
+        /* Fix hover effects - ngăn chặn hover màu đỏ không mong muốn */
+        /* Reset tất cả hover effects cho text elements */
+        p, h1, h2, h3, h4, h5, h6, span, div, small, .text-muted, 
+        .card-text, .card-body, .container,
+        strong, em, i, b {
+            color: inherit !important;
+        }
+
+        p:hover, h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover, 
+        span:hover, div:hover, small:hover, .text-muted:hover,
+        .card-text:hover, .card-body:hover, .container:hover,
+        strong:hover, em:hover, i:hover, b:hover {
+            color: inherit !important;
+        }
+
+        /* Chỉ áp dụng hover effect cho các elements cần thiết */
+        .nav-link, .navbar-brand, .dropdown-item, .btn {
+            transition: all 0.3s ease !important;
+        }
+
+        /* Navbar link hover effects */
+        .navbar-nav .nav-link:hover {
+            color: var(--accent-color) !important;
+            background-color: var(--hover-bg);
+            border-radius: 6px;
+        }
+
+        /* Button hover effects */
+        .btn:hover {
+            transform: translateY(-1px) !important;
+        }
+
+        /* Card hover effects - chỉ cho movie cards */
+        .movie-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
         }
     </style>
 </head>

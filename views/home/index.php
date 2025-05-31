@@ -87,7 +87,7 @@
     </div>
     
     <div class="text-center">
-        <a href="<?php echo BASE_URL; ?>/movies" class="btn btn-outline-light">
+        <a href="<?php echo BASE_URL; ?>/movie" class="btn btn-outline-light">
             Xem Tất Cả Phim <i class="bi bi-arrow-right"></i>
         </a>
     </div>
@@ -130,7 +130,7 @@
                                 $rating = round($movie['avg_rating']);
                                 for ($i = 1; $i <= 5; $i++): 
                                 ?>
-                                    <i class="bi bi-star<?php echo $i <= $rating ? '-fill' : ''; ?>"></i>
+                                    <i class="bi bi-star<?php echo $i <= $rating ? '-fill text-warning' : ' text-muted'; ?>"></i>
                                 <?php endfor; ?>
                                 <small class="text-muted ms-1">
                                     (<?php echo $movie['review_count']; ?>)

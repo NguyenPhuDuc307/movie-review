@@ -63,6 +63,22 @@ if ($controller == 'Movies') {
     $controller = 'Movie';
 }
 
+// Routing shortcuts cho các trang phổ biến
+if ($controller == 'Login') {
+    $controller = 'Auth';
+    $action = 'login';
+}
+
+if ($controller == 'Register') {
+    $controller = 'Auth';
+    $action = 'register';
+}
+
+if ($controller == 'Logout') {
+    $controller = 'Auth';
+    $action = 'logout';
+}
+
 // Debug routing (có thể xóa sau)
 // echo "Controller: $controller, Action: $action, Params: "; print_r($params); echo "<br>";
 // echo "GET params: "; print_r($_GET); echo "<br>";

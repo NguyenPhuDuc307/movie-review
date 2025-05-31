@@ -1,0 +1,15 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Open Movie Review App",
+			"type": "shell",
+			"command": "open",
+			"args": [
+				"http://localhost/movie-review"
+			],
+			"group": "test",
+			"isBackground": false
+		}
+	]
+}

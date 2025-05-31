@@ -11,7 +11,7 @@
                 <p class="text-muted mb-0 mt-2">Tham gia cộng đồng yêu phim</p>
             </div>
             <div class="card-body p-4">
-                <form method="POST" action="<?php echo BASE_URL; ?>/register" id="registerForm">
+                <form method="POST" action="<?php echo BASE_URL; ?>/auth/register" id="registerForm">
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="username" class="form-label">
@@ -125,7 +125,7 @@
                 
                 <div class="text-center">
                     <p class="mb-2">Đã có tài khoản?</p>
-                    <a href="<?php echo BASE_URL; ?>/login" class="btn btn-outline-light">
+                    <a href="<?php echo BASE_URL; ?>/auth/login" class="btn btn-outline-light">
                         <i class="bi bi-box-arrow-in-right"></i> Đăng Nhập Ngay
                     </a>
                 </div>
