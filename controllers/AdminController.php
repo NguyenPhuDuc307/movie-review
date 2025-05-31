@@ -232,6 +232,32 @@ class AdminController extends Controller {
     }
     
     /**
+     * Duyệt review
+     */
+    public function approveReview($id) {
+        if ($this->reviewModel->updateStatus($id, 'approved')) {
+            $_SESSION['success'] = 'Duyệt review thành công!';
+        } else {
+            $_SESSION['error'] = 'Có lỗi xảy ra!';
+        }
+        
+        URLHelper::redirect(URLHelper::adminReviews());
+    }
+    
+    /**
+     * Từ chối review
+     */
+    public function rejectReview($id) {
+        if ($this->reviewModel->updateStatus($id, 'rejected')) {
+            $_SESSION['success'] = 'Từ chối review thành công!';
+        } else {
+            $_SESSION['error'] = 'Có lỗi xảy ra!';
+        }
+        
+        URLHelper::redirect(URLHelper::adminReviews());
+    }
+    
+    /**
      * Xóa review
      */
     public function deleteReview($id) {

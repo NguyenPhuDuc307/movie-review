@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <!-- Back Button -->
             <div class="mb-3">
-                <a href="discussion" class="btn btn-outline-secondary">
+                <a href="<?php echo BASE_URL; ?>/discussion" class="btn btn-outline-secondary">
                     <i class="fas fa-arrow-left"></i> Quay lại danh sách
                 </a>
             </div>
@@ -111,7 +111,7 @@
                                                 <?= date('d/m/Y H:i', strtotime($comment['created_at'])) ?>
                                             </small>
                                             <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $comment['user_id']): ?>
-                                                <a href="discussion/deleteComment/<?= $comment['id'] ?>" 
+                                                <a href="<?php echo BASE_URL; ?>/discussion/deleteComment/<?= $comment['id'] ?>" 
                                                    class="btn btn-sm btn-outline-danger" 
                                                    onclick="return confirm('Bạn có chắc chắn muốn xóa bình luận này?')">
                                                     <i class="fas fa-trash"></i>

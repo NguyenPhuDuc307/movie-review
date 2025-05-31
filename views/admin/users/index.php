@@ -1,13 +1,11 @@
-<?php include BASE_PATH . '/views/layouts/header.php'; ?>
+<?php 
+$current_page = 'users';
+include BASE_PATH . '/views/layouts/admin_header.php'; 
+?>
 
 <div class="container-fluid mt-4">
-    <div class="row">
-        <div class="col-md-12">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2><i class="bi bi-people"></i> Quản lý người dùng</h2>
-                <a href="<?= URLHelper::adminDashboard() ?>" class="btn btn-secondary">
-                    <i class="bi bi-arrow-left"></i> Quay lại Dashboard
-                </a>
             </div>
 
             <!-- Flash Messages -->
@@ -59,7 +57,7 @@
                         </div>
                     <?php else: ?>
                         <div class="table-responsive">
-                            <table class="table table-striped">
+                            <table class="table table-striped table-dark">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -134,8 +132,6 @@
                     <?php endif; ?>
                 </div>
             </div>
-        </div>
-    </div>
 </div>
 
 <!-- Modal xác nhận xóa -->
@@ -170,4 +166,4 @@ function deleteUser(userId, username) {
 }
 </script>
 
-<?php include BASE_PATH . '/views/layouts/footer.php'; ?>
+<?php include BASE_PATH . '/views/layouts/admin_footer.php'; ?>

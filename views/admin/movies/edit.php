@@ -2,11 +2,12 @@
 // Kiểm tra quyền admin đã được thực hiện trong AdminController
 // Không cần kiểm tra lại ở đây
 
+$current_page = 'movies';
 $title = "Chỉnh sửa phim - Admin Panel";
-include BASE_PATH . '/views/layouts/header.php';
+include BASE_PATH . '/views/layouts/admin_header.php';
 ?>
 
-<div class="container mt-4">
+<div class="container-fluid mt-4">
     <div class="row">
         <div class="col-md-12">
             <div class="d-flex justify-content-between align-items-center mb-4">
@@ -33,6 +34,9 @@ include BASE_PATH . '/views/layouts/header.php';
             <?php endif; ?>
 
             <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Thông tin phim</h5>
+                </div>
                 <div class="card-body">
                     <form action="<?= URLHelper::adminUpdateMovie($movie['id']) ?>" method="POST">
                         <div class="row">
@@ -118,4 +122,4 @@ include BASE_PATH . '/views/layouts/header.php';
     </div>
 </div>
 
-<?php include BASE_PATH . '/views/layouts/footer.php'; ?>
+<?php include BASE_PATH . '/views/layouts/admin_footer.php'; ?>

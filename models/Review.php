@@ -120,6 +120,15 @@ class Review extends Model {
     }
     
     /**
+     * Cập nhật trạng thái review (admin)
+     */
+    public function updateStatus($id, $status) {
+        $sql = "UPDATE reviews SET status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([$status, $id]);
+    }
+    
+    /**
      * Xóa review (admin)
      */
     public function delete($id) {

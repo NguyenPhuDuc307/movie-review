@@ -235,6 +235,20 @@ class URLHelper {
     }
     
     /**
+     * Tạo URL cho duyệt review admin
+     */
+    public static function adminApproveReview($reviewId) {
+        return BASE_URL . '/admin/reviews/approve/' . (int)$reviewId;
+    }
+    
+    /**
+     * Tạo URL cho từ chối review admin
+     */
+    public static function adminRejectReview($reviewId) {
+        return BASE_URL . '/admin/reviews/reject/' . (int)$reviewId;
+    }
+    
+    /**
      * Tạo URL cho xóa review admin
      */
     public static function adminDeleteReview($reviewId) {

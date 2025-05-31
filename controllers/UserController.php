@@ -194,6 +194,47 @@ class UserController extends Controller {
         return $stmt->fetchAll();
     }
     
+    public function reviews() {
+        // Require login để truy cập reviews
+        $this->requireLogin();
+        
+        $userId = $_SESSION['user_id'];
+        
+        // Pagination
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $limit = 10;
+        $offset = ($page - 1) * $limit;
+        
+        // Lấy tất cả reviews của user với thông tin phim
+        $sql = "SELECT r.*, m.title as movie_title, m.poster as movie_poster, m.id as movie_id
+                FROM reviews r
+                INNER JOIN movies m ON r.movie_id = m.id
+                WHERE r.user_id = ?
+                ORDER BY r.created_at DESC
+                LIMIT ? OFFSET ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$userId, $limit, $offset]);
+        $reviews = $stmt->fetchAll();
+        
+        // Đếm tổng số reviews
+        $countSql = "SELECT COUNT(*) as total FROM reviews WHERE user_id = ?";
+        $countStmt = $this->pdo->prepare($countSql);
+        $countStmt->execute([$userId]);
+        $totalReviews = $countStmt->fetch()['total'];
+        
+        $totalPages = ceil($totalReviews / $limit);
+        
+        $data = [
+            'reviews' => $reviews,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
+            'totalReviews' => $totalReviews,
+            'pageTitle' => 'Reviews Của Tôi'
+        ];
+        
+        $this->view('user/reviews', $data);
+    }
+
     public function __construct() {
         global $pdo;
         $this->pdo = $pdo;

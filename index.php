@@ -79,6 +79,10 @@ switch ($controller) {
         elseif ($action === 'detail' && isset($params[0])) {
             $params[0] = (int)$params[0];
         }
+        // /movie -> movie/index (default)
+        elseif ($action === 'index' || empty($action)) {
+            $action = 'index';
+        }
         break;
         
     case 'Discussion':
@@ -90,6 +94,10 @@ switch ($controller) {
         // /discussion/detail/123
         elseif ($action === 'detail' && isset($params[0])) {
             $params[0] = (int)$params[0];
+        }
+        // /discussion -> discussion/index (default)
+        elseif ($action === 'index' || empty($action)) {
+            $action = 'index';
         }
         break;
         
@@ -145,11 +153,24 @@ switch ($controller) {
                 $params = [];
             }
         }
+        // /admin/reviews/approve/123 -> admin/approveReview/123
+        // /admin/reviews/reject/123 -> admin/rejectReview/123
         // /admin/reviews/delete/123 -> admin/deleteReview/123
         elseif ($action === 'reviews') {
-            if (isset($params[0]) && $params[0] === 'delete' && isset($params[1])) {
-                $action = 'deleteReview';
-                $params = [(int)$params[1]];
+            if (isset($params[0]) && isset($params[1])) {
+                if ($params[0] === 'approve') {
+                    $action = 'approveReview';
+                    $params = [(int)$params[1]];
+                } elseif ($params[0] === 'reject') {
+                    $action = 'rejectReview';
+                    $params = [(int)$params[1]];
+                } elseif ($params[0] === 'delete') {
+                    $action = 'deleteReview';
+                    $params = [(int)$params[1]];
+                } else {
+                    $action = 'reviews';
+                    $params = [];
+                }
             } else {
                 $action = 'reviews';
                 $params = [];

@@ -36,18 +36,22 @@ class DiscussionController extends Controller {
         $this->view('discussion/index', $data);
     }
     
-    public function detail($id) {
-        if (!$id) {
+    public function detail($id = null) {
+        // Nếu không có ID hoặc ID không hợp lệ
+        if (!$id || !is_numeric($id)) {
             $this->setFlash('error', 'ID thảo luận không hợp lệ.');
             $this->redirect('discussion');
+            return;
         }
         
+        $id = (int)$id;
         $discussionModel = $this->model('Discussion');
         $discussion = $discussionModel->getByIdWithDetails($id);
         
         if (!$discussion) {
             $this->setFlash('error', 'Không tìm thấy thảo luận.');
             $this->redirect('discussion');
+            return;
         }
         
         // Tăng view count
@@ -156,16 +160,17 @@ class DiscussionController extends Controller {
         $this->redirect('discussion/detail/' . $discussion['id']);
     }
     
-    public function deleteComment($commentId) {
+    public function deleteComment($commentId = null) {
         // Require login
         $this->requireLogin();
         
-        if (!$commentId) {
+        if (!$commentId || !is_numeric($commentId)) {
             $this->setFlash('error', 'ID bình luận không hợp lệ.');
             $this->redirect('discussion');
             return;
         }
         
+        $commentId = (int)$commentId;
         $discussionModel = $this->model('Discussion');
         
         // Lấy thông tin comment để biết discussion_id

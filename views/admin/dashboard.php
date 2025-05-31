@@ -1,50 +1,10 @@
-<?php include BASE_PATH . '/views/layouts/header.php'; ?>
+<?php 
+$current_page = 'dashboard';
+include BASE_PATH . '/views/layouts/admin_header.php'; 
+?>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-2">
-            <!-- Sidebar Admin -->
-            <div class="bg-dark text-white" style="min-height: 100vh; margin-left: -15px; margin-right: -15px; padding: 20px;">
-                <h4 class="mb-4">
-                    <i class="fas fa-cog"></i> Admin Panel
-                </h4>
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link text-white <?= URLHelper::isActive('admin') ? 'bg-primary' : '' ?>" 
-                           href="<?= URLHelper::adminDashboard() ?>">
-                            <i class="fas fa-chart-line"></i> Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white <?= URLHelper::isActive('admin/movies') ? 'bg-primary' : '' ?>" 
-                           href="<?= URLHelper::adminMovies() ?>">
-                            <i class="fas fa-film"></i> Quản lý Phim
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white <?= URLHelper::isActive('admin/users') ? 'bg-primary' : '' ?>" 
-                           href="<?= URLHelper::adminUsers() ?>">
-                            <i class="fas fa-users"></i> Quản lý Users
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white <?= URLHelper::isActive('admin/reviews') ? 'bg-primary' : '' ?>" 
-                           href="<?= URLHelper::adminReviews() ?>">
-                            <i class="fas fa-star"></i> Quản lý Reviews
-                        </a>
-                    </li>
-                    <li class="nav-item mt-3">
-                        <a class="nav-link text-white" href="<?= URLHelper::home() ?>">
-                            <i class="fas fa-arrow-left"></i> Về trang chủ
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="col-md-10">
-            <div class="container">
-                <h1 class="mb-4">Dashboard Admin</h1>
+<div class="container-fluid mt-4">
+    <h1 class="mb-4">Dashboard Admin</h1>
                 
                 <!-- Thống kê tổng quan -->
                 <div class="row mb-4">
@@ -159,8 +119,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 </div>
 
-<?php include BASE_PATH . '/views/layouts/footer.php'; ?>
+<?php include BASE_PATH . '/views/layouts/admin_footer.php'; ?>

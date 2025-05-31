@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <!-- Back Button -->
                     <div class="mb-3">
-                        <a href="discussion" class="btn btn-outline-secondary">
+                        <a href="<?php echo BASE_URL; ?>/discussion" class="btn btn-outline-secondary">
                             <i class="fas fa-arrow-left"></i> Quay lại danh sách
                         </a>
                     </div>

@@ -30,17 +30,21 @@ class MovieController extends Controller {
         $this->view('movie/index', $data);
     }
     
-    public function detail($id) {
-        if (!$id) {
-            $this->redirect('movies');
+    public function detail($id = null) {
+        if (!$id || !is_numeric($id)) {
+            $this->setFlash('error', 'ID phim không hợp lệ.');
+            $this->redirect('movie');
+            return;
         }
         
+        $id = (int)$id;
         $movieModel = $this->model('Movie');
         $movie = $movieModel->getByIdWithDetails($id);
         
         if (!$movie) {
             $this->setFlash('error', 'Không tìm thấy phim.');
-            $this->redirect('movies');
+            $this->redirect('movie');
+            return;
         }
         
         // Lấy reviews của phim
