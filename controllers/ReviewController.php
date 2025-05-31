@@ -2,11 +2,16 @@
 class ReviewController extends Controller {
     private $pdo;
     
-    public function write() {
+    public function write($movieId = null) {
         // Kiểm tra đăng nhập
         $this->requireLogin();
         
-        $movieId = isset($_GET['movie_id']) ? (int)$_GET['movie_id'] : 0;
+        // Lấy movie_id từ parameter hoặc GET
+        if ($movieId) {
+            $movieId = (int)$movieId;
+        } else {
+            $movieId = isset($_GET['movie_id']) ? (int)$_GET['movie_id'] : 0;
+        }
         
         if (!$movieId) {
             $this->setFlash('error', 'ID phim không hợp lệ.');
@@ -22,9 +27,6 @@ class ReviewController extends Controller {
             $this->setFlash('error', 'Không tìm thấy phim.');
             $this->redirect('movie');
         }
-        
-        // Debug - xem dữ liệu phim
-        // var_dump($movie); // Debug để xem dữ liệu
         
         // Kiểm tra user đã review phim này chưa
         $existingReview = $reviewModel->getUserReviewForMovie($_SESSION['user_id'], $movieId);

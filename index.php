@@ -20,6 +20,10 @@ require_once 'models/Review.php';
 require_once 'controllers/HomeController.php';
 require_once 'controllers/AdminController.php';
 require_once 'controllers/AuthController.php';
+require_once 'controllers/MovieController.php';
+require_once 'controllers/ReviewController.php';
+require_once 'controllers/UserController.php';
+require_once 'controllers/DiscussionController.php';
 
 // Tạo hệ thống routing mới
 $request_uri = $_SERVER['REQUEST_URI'];
@@ -171,6 +175,8 @@ if (isset($shortcuts[$controller])) {
 // Debug routing (có thể xóa sau)
 // echo "Controller: $controller, Action: $action, Params: "; print_r($params); echo "<br>";
 // echo "GET params: "; print_r($_GET); echo "<br>";
+// echo "URI: $uri<br>";
+// echo "URI Parts: "; print_r($uri_parts); echo "<br><br>";
 
 // Đường dẫn đến file controller
 $controller_file = 'controllers/' . $controller . 'Controller.php';
