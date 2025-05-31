@@ -11,6 +11,16 @@ require_once 'core/Controller.php';
 require_once 'core/Model.php';
 require_once 'core/URLHelper.php';
 
+// Include các model
+require_once 'models/Movie.php';
+require_once 'models/User.php';
+require_once 'models/Review.php';
+
+// Include các controller
+require_once 'controllers/HomeController.php';
+require_once 'controllers/AdminController.php';
+require_once 'controllers/AuthController.php';
+
 // Tạo hệ thống routing mới
 $request_uri = $_SERVER['REQUEST_URI'];
 $base_path = str_replace('/index.php', '', $_SERVER['SCRIPT_NAME']);
@@ -92,6 +102,55 @@ switch ($controller) {
         
     case 'Auth':
         // Các action cho authentication
+        break;
+        
+    case 'Admin':
+        // /admin -> admin/index (dashboard)
+        if ($action === 'index' || empty($action)) {
+            $action = 'index';
+        }
+        // /admin/movies/create -> admin/createMovie
+        // /admin/movies/edit/123 -> admin/editMovie/123
+        // /admin/movies/delete/123 -> admin/deleteMovie/123
+        if ($action === 'movies') {
+            if (isset($params[0])) {
+                if ($params[0] === 'create') {
+                    $action = 'createMovie';
+                    $params = [];
+                } elseif ($params[0] === 'edit' && isset($params[1])) {
+                    $action = 'editMovie';
+                    $params = [(int)$params[1]];
+                } elseif ($params[0] === 'delete' && isset($params[1])) {
+                    $action = 'deleteMovie';
+                    $params = [(int)$params[1]];
+                } else {
+                    $action = 'movies';
+                    $params = [];
+                }
+            } else {
+                $action = 'movies';
+            }
+        }
+        // /admin/users/delete/123 -> admin/deleteUser/123
+        elseif ($action === 'users') {
+            if (isset($params[0]) && $params[0] === 'delete' && isset($params[1])) {
+                $action = 'deleteUser';
+                $params = [(int)$params[1]];
+            } else {
+                $action = 'users';
+                $params = [];
+            }
+        }
+        // /admin/reviews/delete/123 -> admin/deleteReview/123
+        elseif ($action === 'reviews') {
+            if (isset($params[0]) && $params[0] === 'delete' && isset($params[1])) {
+                $action = 'deleteReview';
+                $params = [(int)$params[1]];
+            } else {
+                $action = 'reviews';
+                $params = [];
+            }
+        }
         break;
 }
 

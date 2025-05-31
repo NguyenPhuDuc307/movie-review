@@ -81,8 +81,8 @@
                     <i class="bi bi-info-circle"></i> Tài Khoản Demo
                 </h6>
                 <small class="text-muted">
-                    <strong>Admin:</strong> admin / password<br>
-                    <strong>User:</strong> user1 / password
+                    <strong>Admin:</strong> admin / admin123<br>
+                    <strong>User:</strong> Đăng ký tài khoản mới
                 </small>
             </div>
         </div>

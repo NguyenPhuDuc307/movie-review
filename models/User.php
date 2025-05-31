@@ -73,5 +73,72 @@ class User extends Model {
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
         return $this->update($id, ['password' => $hashedPassword]);
     }
+    
+    // Phương thức admin
+    
+    /**
+     * Lấy tổng số người dùng (admin)
+     */
+    public function getTotalCount($search = '') {
+        $sql = "SELECT COUNT(*) FROM users WHERE 1=1";
+        $params = [];
+        
+        if (!empty($search)) {
+            $sql .= " AND (username LIKE ? OR email LIKE ? OR full_name LIKE ?)";
+            $searchTerm = "%{$search}%";
+            $params = [$searchTerm, $searchTerm, $searchTerm];
+        }
+        
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchColumn();
+    }
+    
+    /**
+     * Lấy users cho admin với phân trang
+     */
+    public function getForAdmin($search = '', $limit = 10, $offset = 0) {
+        $sql = "SELECT u.*, 
+                       COUNT(r.id) as review_count,
+                       COUNT(d.id) as discussion_count
+                FROM users u 
+                LEFT JOIN reviews r ON u.id = r.user_id
+                LEFT JOIN discussions d ON u.id = d.user_id
+                WHERE 1=1";
+        $params = [];
+        
+        if (!empty($search)) {
+            $sql .= " AND (u.username LIKE ? OR u.email LIKE ? OR u.full_name LIKE ?)";
+            $searchTerm = "%{$search}%";
+            $params = [$searchTerm, $searchTerm, $searchTerm];
+        }
+        
+        $sql .= " GROUP BY u.id ORDER BY u.created_at DESC LIMIT ? OFFSET ?";
+        $params[] = $limit;
+        $params[] = $offset;
+        
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll();
+    }
+    
+    /**
+     * Lấy users mới nhất (admin)
+     */
+    public function getRecent($limit = 5) {
+        $sql = "SELECT * FROM users ORDER BY created_at DESC LIMIT ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$limit]);
+        return $stmt->fetchAll();
+    }
+    
+    /**
+     * Xóa user (admin)
+     */
+    public function delete($id) {
+        $sql = "DELETE FROM users WHERE id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([$id]);
+    }
 }
 ?>

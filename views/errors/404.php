@@ -16,10 +16,10 @@
                     </p>
                     
                     <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
-                        <a href="<?php echo BASE_URL; ?>" class="btn btn-primary">
+                        <a href="<?php echo URLHelper::home(); ?>" class="btn btn-primary">
                             <i class="bi bi-house"></i> Về Trang Chủ
                         </a>
-                        <a href="<?php echo BASE_URL; ?>/movie" class="btn btn-outline-light">
+                        <a href="<?php echo URLHelper::movies(); ?>" class="btn btn-outline-light">
                             <i class="bi bi-collection-play"></i> Xem Phim
                         </a>
                         <button onclick="history.back()" class="btn btn-outline-secondary">
@@ -33,17 +33,17 @@
             <div class="mt-4">
                 <h5 class="mb-3">Có thể bạn quan tâm:</h5>
                 <div class="list-group list-group-flush">
-                    <a href="<?php echo BASE_URL; ?>" class="list-group-item list-group-item-action bg-dark text-light border-secondary">
+                    <a href="<?php echo URLHelper::home(); ?>" class="list-group-item list-group-item-action bg-dark text-light border-secondary">
                         <i class="bi bi-house me-2"></i> Trang chủ
                     </a>
-                    <a href="<?php echo BASE_URL; ?>/movie" class="list-group-item list-group-item-action bg-dark text-light border-secondary">
+                    <a href="<?php echo URLHelper::movies(); ?>" class="list-group-item list-group-item-action bg-dark text-light border-secondary">
                         <i class="bi bi-collection-play me-2"></i> Danh sách phim
                     </a>
-                    <a href="<?php echo BASE_URL; ?>/discussion" class="list-group-item list-group-item-action bg-dark text-light border-secondary">
+                    <a href="<?php echo URLHelper::discussions(); ?>" class="list-group-item list-group-item-action bg-dark text-light border-secondary">
                         <i class="bi bi-chat-dots me-2"></i> Thảo luận
                     </a>
                     <?php if (!isset($_SESSION['user_id'])): ?>
-                        <a href="<?php echo BASE_URL; ?>/auth/register" class="list-group-item list-group-item-action bg-dark text-light border-secondary">
+                        <a href="<?php echo URLHelper::register(); ?>" class="list-group-item list-group-item-action bg-dark text-light border-secondary">
                             <i class="bi bi-person-plus me-2"></i> Đăng ký tài khoản
                         </a>
                     <?php endif; ?>

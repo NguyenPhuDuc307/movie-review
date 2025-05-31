@@ -91,7 +91,10 @@ class URLHelper {
     /**
      * Tạo URL cho hồ sơ người dùng
      */
-    public static function userProfile() {
+    public static function userProfile($userId = null) {
+        if ($userId) {
+            return BASE_URL . '/user/profile/' . (int)$userId;
+        }
         return BASE_URL . '/user/profile';
     }
     
@@ -163,6 +166,13 @@ class URLHelper {
      * Tạo URL cho sửa phim admin
      */
     public static function adminEditMovie($movieId) {
+        return BASE_URL . '/admin/movies/edit/' . (int)$movieId;
+    }
+    
+    /**
+     * Tạo URL cho cập nhật phim admin (POST)
+     */
+    public static function adminUpdateMovie($movieId) {
         return BASE_URL . '/admin/movies/edit/' . (int)$movieId;
     }
     
@@ -272,5 +282,28 @@ class URLHelper {
     public static function back() {
         $referer = $_SERVER['HTTP_REFERER'] ?? self::home();
         self::redirect($referer);
+    }
+    
+    /**
+     * Các trang tĩnh
+     */
+    public static function about() {
+        return BASE_URL . '/about';
+    }
+    
+    public static function help() {
+        return BASE_URL . '/help';
+    }
+    
+    public static function contact() {
+        return BASE_URL . '/contact';
+    }
+    
+    public static function privacy() {
+        return BASE_URL . '/privacy';
+    }
+    
+    public static function terms() {
+        return BASE_URL . '/terms';
     }
 }

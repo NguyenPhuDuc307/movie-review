@@ -2,8 +2,10 @@
 
 <div class="row">
     <!-- Sidebar Profile Info -->
-    <div class="col-lg-4 mb-4">
-        <div class="card">
+    <div class="col-lg-4 mb-4                                    <a href="<?php echo URLHelper::movieDetail($review['movie_id']); ?>" 
+                                       class="text-decoration-none fw-bold text-light">
+                                        <?php echo htmlspecialchars($review['movie_title']); ?>
+                                    </a>       <div class="card">
             <div class="card-body text-center">
                 <!-- Avatar -->
                 <div class="mb-3">

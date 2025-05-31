@@ -10,8 +10,11 @@ class Database {
         $this->conn = null;
         
         try {
+            // Sử dụng socket path cho XAMPP trên macOS
+            $dsn = "mysql:unix_socket=/Applications/XAMPP/xamppfiles/var/mysql/mysql.sock;dbname=" . $this->db_name . ";charset=utf8mb4";
+            
             $this->conn = new PDO(
-                "mysql:host=" . $this->host . ";dbname=" . $this->db_name . ";charset=utf8mb4",
+                $dsn,
                 $this->username,
                 $this->password,
                 array(

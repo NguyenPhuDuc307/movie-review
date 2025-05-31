@@ -49,5 +49,83 @@ class Review extends Model {
             $data['user_id']
         ]);
     }
+    
+    // Phương thức admin
+    
+    /**
+     * Lấy tổng số reviews (admin)
+     */
+    public function getTotalCount($search = '') {
+        $sql = "SELECT COUNT(*) FROM reviews r 
+                LEFT JOIN movies m ON r.movie_id = m.id
+                LEFT JOIN users u ON r.user_id = u.id
+                WHERE 1=1";
+        $params = [];
+        
+        if (!empty($search)) {
+            $sql .= " AND (r.title LIKE ? OR r.content LIKE ? OR m.title LIKE ? OR u.full_name LIKE ?)";
+            $searchTerm = "%{$search}%";
+            $params = [$searchTerm, $searchTerm, $searchTerm, $searchTerm];
+        }
+        
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchColumn();
+    }
+    
+    /**
+     * Lấy reviews cho admin với phân trang
+     */
+    public function getForAdmin($search = '', $limit = 10, $offset = 0) {
+        $sql = "SELECT r.*, 
+                       m.title as movie_title,
+                       u.full_name as user_name,
+                       u.username
+                FROM reviews r 
+                LEFT JOIN movies m ON r.movie_id = m.id
+                LEFT JOIN users u ON r.user_id = u.id
+                WHERE 1=1";
+        $params = [];
+        
+        if (!empty($search)) {
+            $sql .= " AND (r.title LIKE ? OR r.content LIKE ? OR m.title LIKE ? OR u.full_name LIKE ?)";
+            $searchTerm = "%{$search}%";
+            $params = [$searchTerm, $searchTerm, $searchTerm, $searchTerm];
+        }
+        
+        $sql .= " ORDER BY r.created_at DESC LIMIT ? OFFSET ?";
+        $params[] = $limit;
+        $params[] = $offset;
+        
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll();
+    }
+    
+    /**
+     * Lấy reviews mới nhất (admin)
+     */
+    public function getRecent($limit = 5) {
+        $sql = "SELECT r.*, 
+                       m.title as movie_title,
+                       u.full_name as user_name
+                FROM reviews r 
+                LEFT JOIN movies m ON r.movie_id = m.id
+                LEFT JOIN users u ON r.user_id = u.id
+                ORDER BY r.created_at DESC 
+                LIMIT ?";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$limit]);
+        return $stmt->fetchAll();
+    }
+    
+    /**
+     * Xóa review (admin)
+     */
+    public function delete($id) {
+        $sql = "DELETE FROM reviews WHERE id = ?";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([$id]);
+    }
 }
 ?>

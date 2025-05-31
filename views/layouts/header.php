@@ -690,6 +690,12 @@
                                 <li><a class="dropdown-item" href="<?php echo URLHelper::userReviews(); ?>">
                                     <i class="bi bi-star"></i> Reviews Của Tôi
                                 </a></li>
+                                <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="<?php echo URLHelper::adminDashboard(); ?>">
+                                        <i class="bi bi-gear"></i> Admin Panel
+                                    </a></li>
+                                <?php endif; ?>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="<?php echo URLHelper::logout(); ?>">
                                     <i class="bi bi-box-arrow-right"></i> Đăng Xuất
