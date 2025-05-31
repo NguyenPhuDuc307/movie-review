@@ -2,41 +2,33 @@
 
 <div class="row">
     <!-- Sidebar Profile Info -->
-    <div class="col-lg-4 mb-4                                    <a href="<?php echo URLHelper::movieDetail($review['movie_id']); ?>" 
-                                       class="text-decoration-none fw-bold text-light">
-                                        <?php echo htmlspecialchars($review['movie_title']); ?>
-                                    </a>       <div class="card">
+    <div class="col-lg-4 mb-4">
+        <div class="card bg-dark border-secondary">
             <div class="card-body text-center">
                 <!-- Avatar -->
                 <div class="mb-3">
-                    <?php if ($user['avatar']): ?>
-                        <img src="<?php echo BASE_URL; ?>/uploads/avatars/<?php echo $user['avatar']; ?>" 
-                             class="rounded-circle mb-3" 
-                             width="120" height="120" 
-                             style="object-fit: cover; border: 3px solid var(--accent-color);"
-                             alt="Avatar">
-                    <?php else: ?>
-                        <div class="rounded-circle bg-secondary d-inline-flex align-items-center justify-content-center mb-3"
-                             style="width: 120px; height: 120px; border: 3px solid var(--accent-color);">
-                            <i class="bi bi-person-fill" style="font-size: 3rem; color: var(--text-secondary);"></i>
-                        </div>
-                    <?php endif; ?>
+                    <div class="rounded-circle bg-warning d-inline-flex align-items-center justify-content-center mb-3"
+                         style="width: 120px; height: 120px; border: 3px solid #ffc107;">
+                        <span style="font-size: 2.5rem; color: #000; font-weight: bold;">
+                            <?php echo strtoupper(substr($user['full_name'], 0, 1)); ?>
+                        </span>
+                    </div>
                 </div>
                 
-                <h4 class="text-primary"><?php echo htmlspecialchars($user['full_name']); ?></h4>
-                <p class="text-muted">@<?php echo htmlspecialchars($user['username']); ?></p>
+                <h4 class="text-warning"><?php echo htmlspecialchars($user['full_name']); ?></h4>
+                <p class="text-light">@<?php echo htmlspecialchars($user['username']); ?></p>
                 
                 <?php if ($user['role'] === 'admin'): ?>
                     <span class="badge bg-danger mb-3">
                         <i class="bi bi-shield-check"></i> Quản Trị Viên
                     </span>
                 <?php else: ?>
-                    <span class="badge bg-primary mb-3">
+                    <span class="badge bg-warning text-dark mb-3">
                         <i class="bi bi-person"></i> Thành Viên
                     </span>
                 <?php endif; ?>
                 
-                <p class="text-muted">
+                <p class="text-light">
                     <small>
                         <i class="bi bi-calendar"></i>
                         Tham gia: <?php echo date('d/m/Y', strtotime($user['created_at'])); ?>
@@ -46,33 +38,23 @@
         </div>
         
         <!-- Statistics -->
-        <div class="card mt-3">
-            <div class="card-header">
-                <h6 class="mb-0">
+        <div class="card mt-3 bg-dark border-secondary">
+            <div class="card-header bg-dark border-secondary">
+                <h6 class="mb-0 text-warning">
                     <i class="bi bi-graph-up"></i> Thống Kê Hoạt Động
                 </h6>
             </div>
             <div class="card-body">
                 <div class="row text-center">
                     <div class="col-6 mb-3">
-                        <div class="border-end">
-                            <h5 class="text-primary mb-1"><?php echo $userStats['reviews']; ?></h5>
-                            <small class="text-muted">Reviews</small>
+                        <div class="border-end border-secondary">
+                            <h5 class="text-warning mb-1"><?php echo $userStats['reviews']; ?></h5>
+                            <small class="text-light">Reviews</small>
                         </div>
                     </div>
                     <div class="col-6 mb-3">
                         <h5 class="text-success mb-1"><?php echo $userStats['discussions']; ?></h5>
-                        <small class="text-muted">Thảo luận</small>
-                    </div>
-                    <div class="col-6">
-                        <div class="border-end">
-                            <h5 class="text-info mb-1"><?php echo $userStats['comments']; ?></h5>
-                            <small class="text-muted">Bình luận</small>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <h5 class="text-warning mb-1"><?php echo $userStats['likes_received']; ?></h5>
-                        <small class="text-muted">Lượt thích</small>
+                        <small class="text-light">Thảo luận</small>
                     </div>
                 </div>
             </div>
@@ -340,7 +322,7 @@
                         </h6>
                     </div>
                     <div class="card-body">
-                        <form method="POST" enctype="multipart/form-data">
+                        <form method="POST">
                             <!-- Basic Info -->
                             <div class="row mb-4">
                                 <div class="col-md-6">
@@ -353,13 +335,6 @@
                                     <input type="email" class="form-control" id="email" name="email" 
                                            value="<?php echo htmlspecialchars($user['email']); ?>" required>
                                 </div>
-                            </div>
-                            
-                            <!-- Avatar Upload -->
-                            <div class="mb-4">
-                                <label for="avatar" class="form-label">Avatar</label>
-                                <input type="file" class="form-control" id="avatar" name="avatar" accept="image/*">
-                                <div class="form-text">Chấp nhận JPG, PNG, GIF. Tối đa 2MB.</div>
                             </div>
                             
                             <hr>

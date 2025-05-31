@@ -5,12 +5,14 @@ class AdminController extends Controller {
     private $movieModel;
     private $userModel;
     private $reviewModel;
+    private $genreModel;
     
     public function __construct() {
         $this->checkAdminAuth();
         $this->movieModel = new Movie();
         $this->userModel = new User();
         $this->reviewModel = new Review();
+        $this->genreModel = new Genre();
     }
     
     /**
@@ -112,11 +114,11 @@ class AdminController extends Controller {
             $data = [
                 'title' => $_POST['title'] ?? '',
                 'description' => $_POST['description'] ?? '',
-                'release_year' => $_POST['release_year'] ?? '',
+                'release_date' => $_POST['release_date'] ?? '',
                 'director' => $_POST['director'] ?? '',
-                'cast' => $_POST['cast'] ?? '',
+                'genre' => $_POST['genre'] ?? '',
                 'duration' => $_POST['duration'] ?? null,
-                'genre_id' => $_POST['genre_id'] ?? null
+                'trailer_url' => $_POST['trailer_url'] ?? ''
             ];
             
             // Xử lý upload poster mới
@@ -294,5 +296,123 @@ class AdminController extends Controller {
         }
         
         return ['success' => false, 'message' => 'Không thể upload file'];
+    }
+
+    /**
+     * Quản lý thể loại
+     */
+    public function genres() {
+        $search = $_GET['search'] ?? '';
+        $page = (int)($_GET['page'] ?? 1);
+        $limit = 10;
+        $offset = ($page - 1) * $limit;
+        
+        $genres = $this->genreModel->getForAdmin($search, $limit, $offset);
+        $totalGenres = $this->genreModel->getTotalCount($search);
+        $totalPages = ceil($totalGenres / $limit);
+        
+        $this->view('admin/genres/index', [
+            'genres' => $genres,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
+            'search' => $search
+        ]);
+    }
+
+    /**
+     * Thêm thể loại mới
+     */
+    public function createGenre() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'name' => trim($_POST['name']),
+                'description' => trim($_POST['description'] ?? '')
+            ];
+
+            // Validation
+            $errors = [];
+            if (empty($data['name'])) {
+                $errors[] = 'Tên thể loại không được để trống.';
+            } elseif ($this->genreModel->nameExists($data['name'])) {
+                $errors[] = 'Tên thể loại đã tồn tại.';
+            }
+
+            if (empty($errors)) {
+                if ($this->genreModel->createGenre($data)) {
+                    $_SESSION['success'] = 'Thêm thể loại thành công!';
+                    URLHelper::redirect(URLHelper::adminGenres());
+                } else {
+                    $_SESSION['error'] = 'Có lỗi xảy ra!';
+                }
+            } else {
+                $_SESSION['error'] = implode('<br>', $errors);
+            }
+        }
+
+        $this->view('admin/genres/create');
+    }
+
+    /**
+     * Sửa thể loại
+     */
+    public function editGenre($id) {
+        $genre = $this->genreModel->getById($id);
+        if (!$genre) {
+            $_SESSION['error'] = 'Không tìm thấy thể loại!';
+            URLHelper::redirect(URLHelper::adminGenres());
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'name' => trim($_POST['name']),
+                'description' => trim($_POST['description'] ?? '')
+            ];
+
+            // Validation
+            $errors = [];
+            if (empty($data['name'])) {
+                $errors[] = 'Tên thể loại không được để trống.';
+            } elseif ($this->genreModel->nameExists($data['name'], $id)) {
+                $errors[] = 'Tên thể loại đã tồn tại.';
+            }
+
+            if (empty($errors)) {
+                if ($this->genreModel->updateGenre($id, $data)) {
+                    $_SESSION['success'] = 'Cập nhật thể loại thành công!';
+                    URLHelper::redirect(URLHelper::adminGenres());
+                } else {
+                    $_SESSION['error'] = 'Có lỗi xảy ra!';
+                }
+            } else {
+                $_SESSION['error'] = implode('<br>', $errors);
+            }
+        }
+
+        $this->view('admin/genres/edit', ['genre' => $genre]);
+    }
+
+    /**
+     * Xóa thể loại
+     */
+    public function deleteGenre($id) {
+        $genre = $this->genreModel->getById($id);
+        if (!$genre) {
+            $_SESSION['error'] = 'Không tìm thấy thể loại!';
+            URLHelper::redirect(URLHelper::adminGenres());
+        }
+
+        // Kiểm tra xem có phim nào đang sử dụng thể loại này không
+        if (!$this->genreModel->canDelete($id)) {
+            $_SESSION['error'] = 'Không thể xóa thể loại này vì còn phim đang sử dụng!';
+            URLHelper::redirect(URLHelper::adminGenres());
+        }
+
+        if ($this->genreModel->deleteGenre($id)) {
+            $_SESSION['success'] = 'Xóa thể loại thành công!';
+        } else {
+            $_SESSION['error'] = 'Có lỗi xảy ra!';
+        }
+
+        URLHelper::redirect(URLHelper::adminGenres());
     }
 }

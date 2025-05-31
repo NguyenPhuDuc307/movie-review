@@ -15,6 +15,7 @@ require_once 'core/URLHelper.php';
 require_once 'models/Movie.php';
 require_once 'models/User.php';
 require_once 'models/Review.php';
+require_once 'models/Genre.php';
 
 // Include các controller
 require_once 'controllers/HomeController.php';
@@ -150,6 +151,29 @@ switch ($controller) {
                 $params = [(int)$params[1]];
             } else {
                 $action = 'users';
+                $params = [];
+            }
+        }
+        // /admin/genres/create -> admin/createGenre
+        // /admin/genres/edit/123 -> admin/editGenre/123
+        // /admin/genres/delete/123 -> admin/deleteGenre/123
+        elseif ($action === 'genres') {
+            if (isset($params[0])) {
+                if ($params[0] === 'create') {
+                    $action = 'createGenre';
+                    $params = [];
+                } elseif ($params[0] === 'edit' && isset($params[1])) {
+                    $action = 'editGenre';
+                    $params = [(int)$params[1]];
+                } elseif ($params[0] === 'delete' && isset($params[1])) {
+                    $action = 'deleteGenre';
+                    $params = [(int)$params[1]];
+                } else {
+                    $action = 'genres';
+                    $params = [];
+                }
+            } else {
+                $action = 'genres';
                 $params = [];
             }
         }

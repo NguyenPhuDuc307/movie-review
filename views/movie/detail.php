@@ -83,6 +83,85 @@
     <?php else: ?>
         <p>Chưa có đánh giá nào cho phim này.</p>
     <?php endif; ?>
+
+    <hr class="my-5">
+
+    <!-- Phần Thảo Luận -->
+    <div class="discussions-section">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3><i class="fas fa-comments"></i> Thảo Luận về phim</h3>
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <a href="<?= URLHelper::createDiscussion() ?>?movie_id=<?= $movie['id'] ?>" 
+                   class="btn btn-success">
+                    <i class="fas fa-plus"></i> Tạo thảo luận mới
+                </a>
+            <?php endif; ?>
+        </div>
+
+        <?php if (!empty($discussions)): ?>
+            <div class="row">
+                <?php foreach ($discussions as $discussion): ?>
+                    <div class="col-12 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start">
+                                    <!-- Avatar chữ cái đầu -->
+                                    <div class="me-3">
+                                        <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center text-white fw-bold"
+                                             style="width: 40px; height: 40px; font-size: 16px;">
+                                            <?= strtoupper(substr($discussion['full_name'], 0, 1)) ?>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Nội dung thảo luận -->
+                                    <div class="flex-grow-1">
+                                        <h5 class="card-title mb-1">
+                                            <a href="<?= URLHelper::discussionDetail($discussion['id']) ?>" 
+                                               class="text-decoration-none">
+                                                <?= htmlspecialchars($discussion['title']) ?>
+                                            </a>
+                                        </h5>
+                                        <p class="text-muted mb-2">
+                                            Bởi <strong><?= htmlspecialchars($discussion['full_name']) ?></strong>
+                                            • <?= date('d/m/Y H:i', strtotime($discussion['created_at'])) ?>
+                                            • <i class="fas fa-comment"></i> <?= $discussion['comment_count'] ?> bình luận
+                                        </p>
+                                        <p class="card-text">
+                                            <?= nl2br(htmlspecialchars(substr($discussion['content'], 0, 200))) ?>
+                                            <?php if (strlen($discussion['content']) > 200): ?>
+                                                <span class="text-muted">... </span>
+                                                <a href="<?= URLHelper::discussionDetail($discussion['id']) ?>" 
+                                                   class="text-primary">đọc tiếp</a>
+                                            <?php endif; ?>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            
+            <!-- Link xem tất cả thảo luận -->
+            <div class="text-center mt-4">
+                <a href="<?= URLHelper::discussion() ?>?movie_id=<?= $movie['id'] ?>" 
+                   class="btn btn-outline-primary">
+                    <i class="fas fa-list"></i> Xem tất cả thảo luận về phim này
+                </a>
+            </div>
+        <?php else: ?>
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i> 
+                Chưa có thảo luận nào về phim này. 
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <a href="<?= URLHelper::createDiscussion() ?>?movie_id=<?= $movie['id'] ?>" 
+                       class="alert-link">Hãy là người đầu tiên tạo thảo luận!</a>
+                <?php else: ?>
+                    <a href="<?= URLHelper::login() ?>" class="alert-link">Đăng nhập</a> để tạo thảo luận.
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
+    </div>
 </div>
 
 <?php include 'views/layouts/footer.php'; ?>

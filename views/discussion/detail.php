@@ -62,17 +62,13 @@
                         <hr>
                         
                         <div class="row text-center">
-                            <div class="col-4">
+                            <div class="col-6">
                                 <small class="text-muted">Lượt xem</small><br>
                                 <strong><?= number_format($discussion['views']) ?></strong>
                             </div>
-                            <div class="col-4">
+                            <div class="col-6">
                                 <small class="text-muted">Bình luận</small><br>
                                 <strong><?= number_format($discussion['comment_count']) ?></strong>
-                            </div>
-                            <div class="col-4">
-                                <small class="text-muted">Thích</small><br>
-                                <strong><?= number_format($discussion['like_count']) ?></strong>
                             </div>
                         </div>
                     </div>

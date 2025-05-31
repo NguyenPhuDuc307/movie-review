@@ -50,6 +50,10 @@ class MovieController extends Controller {
         // Lấy reviews của phim
         $reviews = $movieModel->getMovieReviews($id);
         
+        // Lấy thảo luận của phim
+        $discussionModel = $this->model('Discussion');
+        $discussions = $discussionModel->getByMovie($id);
+        
         // Kiểm tra user đã review chưa (nếu đã đăng nhập)
         $userReview = null;
         if (isset($_SESSION['user_id'])) {
@@ -60,6 +64,7 @@ class MovieController extends Controller {
         $data = [
             'movie' => $movie,
             'reviews' => $reviews,
+            'discussions' => $discussions,
             'userReview' => $userReview,
             'pageTitle' => $movie['title']
         ];

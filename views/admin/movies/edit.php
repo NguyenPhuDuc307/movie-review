@@ -38,7 +38,7 @@ include BASE_PATH . '/views/layouts/admin_header.php';
                     <h5 class="mb-0">Thông tin phim</h5>
                 </div>
                 <div class="card-body">
-                    <form action="<?= URLHelper::adminUpdateMovie($movie['id']) ?>" method="POST">
+                    <form action="<?= URLHelper::adminUpdateMovie($movie['id']) ?>" method="POST" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="mb-3">
@@ -63,9 +63,9 @@ include BASE_PATH . '/views/layouts/admin_header.php';
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="release_date" class="form-label">Ngày phát hành</label>
-                                            <input type="date" class="form-control" id="release_date" name="release_date" 
-                                                   value="<?= $movie['release_date'] ?>">
+                                            <label for="release_year" class="form-label">Năm phát hành</label>
+                                            <input type="number" class="form-control" id="release_year" name="release_year" 
+                                                   value="<?= $movie['release_year'] ?>" min="1900" max="<?= date('Y') + 5 ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -73,9 +73,16 @@ include BASE_PATH . '/views/layouts/admin_header.php';
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="genre" class="form-label">Thể loại</label>
-                                            <input type="text" class="form-control" id="genre" name="genre" 
-                                                   value="<?= htmlspecialchars($movie['genre']) ?>">
+                                            <label for="genre_id" class="form-label">Thể loại</label>
+                                            <select class="form-select" id="genre_id" name="genre_id">
+                                                <option value="">-- Chọn thể loại --</option>
+                                                <?php foreach ($genres as $genre): ?>
+                                                    <option value="<?= $genre['id'] ?>" 
+                                                            <?= ($movie['genre_id'] == $genre['id']) ? 'selected' : '' ?>>
+                                                        <?= htmlspecialchars($genre['name']) ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -90,21 +97,27 @@ include BASE_PATH . '/views/layouts/admin_header.php';
 
                             <div class="col-md-4">
                                 <div class="mb-3">
-                                    <label for="poster_url" class="form-label">URL poster</label>
-                                    <input type="url" class="form-control" id="poster_url" name="poster_url" 
-                                           value="<?= htmlspecialchars($movie['poster_url']) ?>">
-                                    <?php if ($movie['poster_url']): ?>
+                                    <label for="poster" class="form-label">Poster phim</label>
+                                    <input type="file" class="form-control" id="poster" name="poster" 
+                                           accept="image/jpeg,image/jpg,image/png">
+                                    <div class="form-text">Chấp nhận file JPG, JPEG, PNG. Tối đa 5MB.</div>
+                                    
+                                    <?php if (!empty($movie['poster'])): ?>
                                         <div class="mt-2">
-                                            <img src="<?= URLHelper::poster($movie['poster_url']) ?>" 
-                                                 alt="Current poster" class="img-thumbnail" style="max-height: 200px;">
+                                            <label class="form-label">Poster hiện tại:</label>
+                                            <div>
+                                                <img src="<?= URLHelper::poster($movie['poster']) ?>" 
+                                                     alt="Current poster" class="img-thumbnail" style="max-height: 200px;">
+                                            </div>
                                         </div>
                                     <?php endif; ?>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="trailer_url" class="form-label">URL trailer</label>
+                                    <label for="trailer_url" class="form-label">URL trailer (YouTube)</label>
                                     <input type="url" class="form-control" id="trailer_url" name="trailer_url" 
-                                           value="<?= htmlspecialchars($movie['trailer_url']) ?>">
+                                           value="<?= htmlspecialchars($movie['trailer_url'] ?? '') ?>"
+                                           placeholder="https://www.youtube.com/watch?v=...">
                                 </div>
                             </div>
                         </div>

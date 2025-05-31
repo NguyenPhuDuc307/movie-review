@@ -1,3 +1,7 @@
+<?php
+// Require Movie model for genre dropdown
+require_once 'models/Movie.php';
+?>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -660,6 +664,27 @@
                         <a class="nav-link <?php echo URLHelper::isActive('movie') ? 'active' : ''; ?>" href="<?php echo URLHelper::movies(); ?>">
                             <i class="bi bi-collection-play"></i> Phim
                         </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-tags"></i> Thể Loại
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="<?php echo URLHelper::movies(); ?>">
+                                <i class="bi bi-collection"></i> Tất cả thể loại
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <?php
+                            // Lấy danh sách thể loại
+                            $movieModel = new Movie();
+                            $genres = $movieModel->getAllGenres();
+                            foreach ($genres as $genre):
+                            ?>
+                                <li><a class="dropdown-item" href="<?php echo URLHelper::movies(); ?>?genre=<?= $genre['id'] ?>">
+                                    <?= htmlspecialchars($genre['name']) ?>
+                                </a></li>
+                            <?php endforeach; ?>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?php echo URLHelper::isActive('discussion') ? 'active' : ''; ?>" href="<?php echo URLHelper::discussions(); ?>">

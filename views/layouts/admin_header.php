@@ -95,6 +95,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link <?= strpos($_SERVER['REQUEST_URI'], '/admin/genres') !== false ? 'active' : '' ?>" 
+                               href="<?= URLHelper::adminGenres() ?>">
+                                <i class="fas fa-tags"></i> Quản lý Thể Loại
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link <?= strpos($_SERVER['REQUEST_URI'], '/admin/users') !== false ? 'active' : '' ?>" 
                                href="<?= URLHelper::adminUsers() ?>">
                                 <i class="fas fa-users"></i> Quản lý Users

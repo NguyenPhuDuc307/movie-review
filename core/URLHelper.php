@@ -256,6 +256,49 @@ class URLHelper {
     }
     
     /**
+     * Tạo URL cho quản lý thể loại admin
+     */
+    public static function adminGenres($search = '', $page = 1) {
+        $url = BASE_URL . '/admin/genres';
+        $params = [];
+        
+        if (!empty($search)) {
+            $params['search'] = $search;
+        }
+        
+        if ($page > 1) {
+            $params['page'] = $page;
+        }
+        
+        if (!empty($params)) {
+            $url .= '?' . http_build_query($params);
+        }
+        
+        return $url;
+    }
+    
+    /**
+     * Tạo URL cho tạo thể loại mới admin
+     */
+    public static function adminCreateGenre() {
+        return BASE_URL . '/admin/genres/create';
+    }
+    
+    /**
+     * Tạo URL cho chỉnh sửa thể loại admin
+     */
+    public static function adminEditGenre($genreId) {
+        return BASE_URL . '/admin/genres/edit/' . (int)$genreId;
+    }
+    
+    /**
+     * Tạo URL cho xóa thể loại admin
+     */
+    public static function adminDeleteGenre($genreId) {
+        return BASE_URL . '/admin/genres/delete/' . (int)$genreId;
+    }
+    
+    /**
      * Tạo URL cho poster phim
      */
     public static function poster($filename) {
@@ -263,6 +306,23 @@ class URLHelper {
             return BASE_URL . '/uploads/posters/default.jpg';
         }
         return BASE_URL . '/uploads/posters/' . htmlspecialchars($filename);
+    }
+    
+    /**
+     * Tạo URL cho avatar người dùng
+     */
+    public static function avatar($filename) {
+        if (empty($filename)) {
+            return BASE_URL . '/uploads/avatars/default-avatar.png';
+        }
+        return BASE_URL . '/uploads/avatars/' . htmlspecialchars($filename);
+    }
+    
+    /**
+     * Tạo URL cho danh sách thảo luận (alias cho discussions)
+     */
+    public static function discussion($search = '', $movie_id = '') {
+        return self::discussions($search, $movie_id);
     }
     
     /**

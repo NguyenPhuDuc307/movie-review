@@ -151,20 +151,6 @@ class UserController extends Controller {
         $stmt->execute([$userId]);
         $stats['discussions'] = $stmt->fetch()['count'];
         
-        // Số lượng comments
-        $stmt = $pdo->prepare("SELECT COUNT(*) as count FROM comments WHERE user_id = ?");
-        $stmt->execute([$userId]);
-        $stats['comments'] = $stmt->fetch()['count'];
-        
-        // Số lượng likes nhận được
-        $stmt = $pdo->prepare("
-            SELECT COUNT(*) as count FROM likes l
-            INNER JOIN reviews r ON l.review_id = r.id
-            WHERE r.user_id = ?
-        ");
-        $stmt->execute([$userId]);
-        $stats['likes_received'] = $stmt->fetch()['count'];
-        
         return $stats;
     }
     
