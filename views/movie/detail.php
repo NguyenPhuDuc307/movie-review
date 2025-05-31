@@ -28,7 +28,14 @@
             <?php if (isset($movie['avg_rating']) && $movie['review_count'] > 0): ?>
                 <div class="rating-summary mb-3">
                     <h5>Đánh giá trung bình: 
-                        <span class="text-warning"><?= number_format($movie['avg_rating'], 1) ?>/5</span>
+                        <div class="rating-display d-inline-block">
+                            <?php 
+                            $avgRating = round($movie['avg_rating']);
+                            for ($i = 1; $i <= 5; $i++): ?>
+                                <i class="<?= $i <= $avgRating ? 'fas fa-star' : 'far fa-star' ?> star"></i>
+                            <?php endfor; ?>
+                        </div>
+                        <span class="text-warning ms-2"><?= number_format($movie['avg_rating'], 1) ?>/5</span>
                         <small class="text-muted">(<?= $movie['review_count'] ?> đánh giá)</small>
                     </h5>
                 </div>
@@ -68,9 +75,11 @@
                 <div class="card-body">
                     <h5 class="card-title"><?= htmlspecialchars($review['full_name']) ?></h5>
                     <div class="rating mb-2">
-                        <?php for ($i = 1; $i <= 5; $i++): ?>
-                            <span class="<?= $i <= $review['rating'] ? 'text-warning' : 'text-muted' ?>">★</span>
-                        <?php endfor; ?>
+                        <div class="rating-display d-inline-block">
+                            <?php for ($i = 1; $i <= 5; $i++): ?>
+                                <i class="<?= $i <= $review['rating'] ? 'fas fa-star' : 'far fa-star' ?> star"></i>
+                            <?php endfor; ?>
+                        </div>
                         <span class="ms-2"><?= $review['rating'] ?>/5</span>
                     </div>
                     <p><?= nl2br(htmlspecialchars($review['content'])) ?></p>

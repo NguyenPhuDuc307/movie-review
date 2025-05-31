@@ -299,6 +299,35 @@ class URLHelper {
     }
     
     /**
+     * Tạo URL cho quản lý thảo luận admin
+     */
+    public static function adminDiscussions($search = '', $page = 1) {
+        $url = BASE_URL . '/admin/discussions';
+        $params = [];
+        
+        if (!empty($search)) {
+            $params['search'] = $search;
+        }
+        
+        if ($page > 1) {
+            $params['page'] = $page;
+        }
+        
+        if (!empty($params)) {
+            $url .= '?' . http_build_query($params);
+        }
+        
+        return $url;
+    }
+    
+    /**
+     * Tạo URL cho xóa thảo luận admin
+     */
+    public static function adminDeleteDiscussion($discussionId) {
+        return BASE_URL . '/admin/discussions/delete/' . (int)$discussionId;
+    }
+    
+    /**
      * Tạo URL cho poster phim
      */
     public static function poster($filename) {

@@ -112,6 +112,12 @@
                                 <i class="fas fa-star"></i> Quản lý Reviews
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?= strpos($_SERVER['REQUEST_URI'], '/admin/discussions') !== false ? 'active' : '' ?>" 
+                               href="<?= URLHelper::adminDiscussions() ?>">
+                                <i class="fas fa-comments"></i> Quản lý Thảo Luận
+                            </a>
+                        </li>
                         <li class="nav-item mt-3">
                             <hr class="border-secondary">
                         </li>

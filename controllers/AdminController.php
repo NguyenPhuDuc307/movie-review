@@ -6,6 +6,7 @@ class AdminController extends Controller {
     private $userModel;
     private $reviewModel;
     private $genreModel;
+    private $discussionModel;
     
     public function __construct() {
         $this->checkAdminAuth();
@@ -13,6 +14,7 @@ class AdminController extends Controller {
         $this->userModel = new User();
         $this->reviewModel = new Review();
         $this->genreModel = new Genre();
+        $this->discussionModel = new Discussion();
     }
     
     /**
@@ -32,9 +34,11 @@ class AdminController extends Controller {
             'total_movies' => $this->movieModel->getTotalCount(),
             'total_users' => $this->userModel->getTotalCount(),
             'total_reviews' => $this->reviewModel->getTotalCount(),
+            'total_discussions' => $this->discussionModel->getTotalCount(),
             'recent_movies' => $this->movieModel->getRecent(5),
             'recent_users' => $this->userModel->getRecent(5),
-            'recent_reviews' => $this->reviewModel->getRecent(5)
+            'recent_reviews' => $this->reviewModel->getRecent(5),
+            'recent_discussions' => $this->discussionModel->getLatest(5)
         ];
         
         $this->view('admin/dashboard', $stats);
@@ -414,5 +418,42 @@ class AdminController extends Controller {
         }
 
         URLHelper::redirect(URLHelper::adminGenres());
+    }
+    
+    /**
+     * Quản lý thảo luận
+     */
+    public function discussions() {
+        $search = $_GET['search'] ?? '';
+        $page = (int)($_GET['page'] ?? 1);
+        $limit = 10;
+        $offset = ($page - 1) * $limit;
+        
+        $discussions = $this->discussionModel->getForAdmin($search, $limit, $offset);
+        $total = $this->discussionModel->getTotalCount($search);
+        $totalPages = ceil($total / $limit);
+        
+        $data = [
+            'discussions' => $discussions,
+            'search' => $search,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
+            'total' => $total
+        ];
+        
+        $this->view('admin/discussions/index', $data);
+    }
+    
+    /**
+     * Xóa thảo luận
+     */
+    public function deleteDiscussion($id) {
+        if ($this->discussionModel->delete($id)) {
+            $_SESSION['success'] = 'Xóa thảo luận thành công!';
+        } else {
+            $_SESSION['error'] = 'Có lỗi xảy ra!';
+        }
+        
+        URLHelper::redirect(URLHelper::adminDiscussions());
     }
 }

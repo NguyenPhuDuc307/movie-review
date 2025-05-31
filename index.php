@@ -16,6 +16,7 @@ require_once 'models/Movie.php';
 require_once 'models/User.php';
 require_once 'models/Review.php';
 require_once 'models/Genre.php';
+require_once 'models/Discussion.php';
 
 // Include các controller
 require_once 'controllers/HomeController.php';
@@ -197,6 +198,17 @@ switch ($controller) {
                 }
             } else {
                 $action = 'reviews';
+                $params = [];
+            }
+        }
+        // /admin/discussions -> admin/discussions
+        // /admin/discussions/delete/123 -> admin/deleteDiscussion/123
+        elseif ($action === 'discussions') {
+            if (isset($params[0]) && $params[0] === 'delete' && isset($params[1])) {
+                $action = 'deleteDiscussion';
+                $params = [(int)$params[1]];
+            } else {
+                $action = 'discussions';
                 $params = [];
             }
         }

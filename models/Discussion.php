@@ -176,5 +176,55 @@ class Discussion extends Model {
         $stmt->execute([$commentId]);
         return $stmt->fetch();
     }
+    
+    /**
+     * Lấy discussions cho admin với phân trang và tìm kiếm
+     */
+    public function getForAdmin($search = '', $limit = 10, $offset = 0) {
+        $sql = "SELECT d.*, u.full_name as username, u.email, m.title as movie_title,
+                       COUNT(c.id) as comment_count
+                FROM discussions d 
+                INNER JOIN users u ON d.user_id = u.id 
+                LEFT JOIN movies m ON d.movie_id = m.id
+                LEFT JOIN comments c ON d.id = c.discussion_id
+                WHERE 1=1";
+        $params = [];
+        
+        if (!empty($search)) {
+            $sql .= " AND (d.title LIKE ? OR d.content LIKE ? OR u.full_name LIKE ? OR m.title LIKE ?)";
+            $searchParam = "%$search%";
+            $params = [$searchParam, $searchParam, $searchParam, $searchParam];
+        }
+        
+        $sql .= " GROUP BY d.id ORDER BY d.created_at DESC LIMIT ? OFFSET ?";
+        $params[] = $limit;
+        $params[] = $offset;
+        
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll();
+    }
+    
+    /**
+     * Đếm tổng số discussions (có thể có search)
+     */
+    public function getTotalCount($search = '') {
+        $sql = "SELECT COUNT(DISTINCT d.id) as total 
+                FROM discussions d 
+                INNER JOIN users u ON d.user_id = u.id 
+                LEFT JOIN movies m ON d.movie_id = m.id
+                WHERE 1=1";
+        $params = [];
+        
+        if (!empty($search)) {
+            $sql .= " AND (d.title LIKE ? OR d.content LIKE ? OR u.full_name LIKE ? OR m.title LIKE ?)";
+            $searchParam = "%$search%";
+            $params = [$searchParam, $searchParam, $searchParam, $searchParam];
+        }
+        
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetch()['total'];
+    }
 }
 ?>
