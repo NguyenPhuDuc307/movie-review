@@ -47,7 +47,21 @@ require_once 'models/Movie.php';
         .navbar {
             background-color: var(--bg-secondary) !important;
             border-bottom: 1px solid var(--border-color);
-            padding: 1rem 0;
+            padding: 0.5rem 0;
+            flex-wrap: nowrap !important;
+        }
+
+        .navbar-collapse {
+            flex-wrap: nowrap !important;
+        }
+
+        .navbar-nav {
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+        }
+
+        .navbar-nav .nav-item {
+            white-space: nowrap;
         }
         
         .navbar-brand {
@@ -58,8 +72,10 @@ require_once 'models/Movie.php';
         
         .navbar-nav .nav-link {
             color: var(--text-primary) !important;
-            margin: 0 0.5rem;
+            margin: 0 0.25rem;
+            padding: 0.5rem 0.75rem !important;
             transition: all 0.3s ease;
+            white-space: nowrap;
         }
         
         .navbar-nav .nav-link:hover {
@@ -179,7 +195,32 @@ require_once 'models/Movie.php';
         }
         
         .search-form {
-            max-width: 500px;
+            max-width: 350px;
+            min-width: 250px;
+            flex-shrink: 0;
+        }
+
+        /* Media query cho màn hình nhỏ */
+        @media (max-width: 991px) {
+            .navbar-nav {
+                flex-direction: column !important;
+                width: 100%;
+            }
+            
+            .navbar-nav .nav-item {
+                width: 100%;
+            }
+            
+            .search-form {
+                max-width: 100%;
+                margin: 1rem 0;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .navbar-expand-lg .navbar-nav {
+                flex-direction: row !important;
+            }
         }
         
         .hero-section {

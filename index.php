@@ -3,7 +3,7 @@ session_start();
 
 // Định nghĩa các hằng số
 define('BASE_PATH', __DIR__);
-define('BASE_URL', 'http://localhost/movie-review');
+define('BASE_URL', 'https://tarpon-glorious-redfish.ngrok-free.app/movie-review');
 
 // Include các file cần thiết
 require_once 'config/database.php';
