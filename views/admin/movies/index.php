@@ -82,15 +82,14 @@ include BASE_PATH . '/views/layouts/admin_header.php';
                                                         No Image
                                                     </div>
                                                 <?php endif; ?>
-                                            </td>
-                                            <td>
-                                                <strong><?= htmlspecialchars($movie['title']) ?></strong><br>
-                                                <small class="text-muted">
-                                                    Đạo diễn: <?= htmlspecialchars($movie['director'] ?? 'Chưa cập nhật') ?>
-                                                </small>
-                                            </td>
-                                            <td><?= htmlspecialchars($movie['genre'] ?? 'Chưa phân loại') ?></td>
-                                            <td><?= date('Y', strtotime($movie['release_date'] ?? '')) ?: 'N/A' ?></td>
+                                            </td>                            <td>
+                                <strong><?= htmlspecialchars($movie['title']) ?></strong><br>
+                                <small class="text-muted">
+                                    Đạo diễn: <?= htmlspecialchars($movie['director'] ?? 'Chưa cập nhật') ?>
+                                </small>
+                            </td>
+                            <td><?= htmlspecialchars($movie['genre_name'] ?? 'Chưa phân loại') ?></td>
+                            <td><?= htmlspecialchars($movie['release_year'] ?? 'N/A') ?></td>
                                             <td>
                                                 <span class="badge bg-info"><?= $movie['review_count'] ?? 0 ?></span>
                                             </td>

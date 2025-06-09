@@ -4,7 +4,7 @@
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="text-light">
-            <i class="fas fa-star"></i> Reviews Của Tôi
+            <i class="fas fa-star"></i> Đánh giá của tôi
         </h2>
         <div class="text-muted">
             Tổng cộng: <span class="badge bg-primary"><?= $data['totalReviews'] ?></span> reviews
@@ -34,20 +34,20 @@
                                 <!-- Movie Poster -->
                                 <div class="col-md-2">
                                     <a href="<?= URLHelper::movieDetail($review['movie_id']) ?>">
-                                        <img src="<?= $review['movie_poster'] ? BASE_URL . '/uploads/posters/' . $review['movie_poster'] : BASE_URL . '/assets/images/no-poster.jpg' ?>" 
-                                             class="img-fluid rounded" 
-                                             alt="<?= htmlspecialchars($review['movie_title']) ?>"
-                                             style="height: 120px; object-fit: cover;">
+                                        <img src="<?= $review['movie_poster'] ? BASE_URL . '/uploads/posters/' . $review['movie_poster'] : BASE_URL . '/assets/images/no-poster.jpg' ?>"
+                                            class="img-fluid rounded"
+                                            alt="<?= htmlspecialchars($review['movie_title']) ?>"
+                                            style="height: 120px; object-fit: cover;">
                                     </a>
                                 </div>
-                                
+
                                 <!-- Review Content -->
                                 <div class="col-md-10">
                                     <!-- Movie Title and Rating -->
                                     <div class="d-flex justify-content-between align-items-start mb-2">
                                         <h5 class="card-title mb-0">
-                                            <a href="<?= URLHelper::movieDetail($review['movie_id']) ?>" 
-                                               class="text-light text-decoration-none">
+                                            <a href="<?= URLHelper::movieDetail($review['movie_id']) ?>"
+                                                class="text-light text-decoration-none">
                                                 <?= htmlspecialchars($review['movie_title']) ?>
                                             </a>
                                         </h5>
@@ -64,23 +64,23 @@
                                             </small>
                                         </div>
                                     </div>
-                                    
+
                                     <!-- Review Content -->
                                     <div class="text-light mb-3">
                                         <?= nl2br(htmlspecialchars($review['content'])) ?>
                                     </div>
-                                    
+
                                     <!-- Actions -->
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <a href="<?= URLHelper::movieDetail($review['movie_id']) ?>" 
-                                               class="btn btn-outline-primary btn-sm">
+                                            <a href="<?= URLHelper::movieDetail($review['movie_id']) ?>"
+                                                class="btn btn-outline-primary btn-sm">
                                                 <i class="fas fa-eye"></i> Xem phim
                                             </a>
                                         </div>
                                         <div>
-                                            <a href="<?= URLHelper::movieDetail($review['movie_id']) ?>#review-<?= $review['id'] ?>" 
-                                               class="btn btn-outline-secondary btn-sm">
+                                            <a href="<?= URLHelper::movieDetail($review['movie_id']) ?>#review-<?= $review['id'] ?>"
+                                                class="btn btn-outline-secondary btn-sm">
                                                 <i class="fas fa-link"></i> Xem review
                                             </a>
                                         </div>
@@ -100,8 +100,8 @@
                     <!-- Previous -->
                     <?php if ($data['currentPage'] > 1): ?>
                         <li class="page-item">
-                            <a class="page-link bg-dark border-secondary text-light" 
-                               href="<?= URLHelper::userReviews() ?>?page=<?= $data['currentPage'] - 1 ?>">
+                            <a class="page-link bg-dark border-secondary text-light"
+                                href="<?= URLHelper::userReviews() ?>?page=<?= $data['currentPage'] - 1 ?>">
                                 <i class="fas fa-chevron-left"></i> Trước
                             </a>
                         </li>
@@ -114,15 +114,15 @@
                     <?php endif; ?>
 
                     <!-- Page Numbers -->
-                    <?php 
+                    <?php
                     $startPage = max(1, $data['currentPage'] - 2);
                     $endPage = min($data['totalPages'], $data['currentPage'] + 2);
                     ?>
-                    
+
                     <?php for ($page = $startPage; $page <= $endPage; $page++): ?>
                         <li class="page-item <?= $page == $data['currentPage'] ? 'active' : '' ?>">
-                            <a class="page-link bg-dark border-secondary <?= $page == $data['currentPage'] ? 'bg-primary border-primary' : 'text-light' ?>" 
-                               href="<?= URLHelper::userReviews() ?>?page=<?= $page ?>">
+                            <a class="page-link bg-dark border-secondary <?= $page == $data['currentPage'] ? 'bg-primary border-primary' : 'text-light' ?>"
+                                href="<?= URLHelper::userReviews() ?>?page=<?= $page ?>">
                                 <?= $page ?>
                             </a>
                         </li>
@@ -131,8 +131,8 @@
                     <!-- Next -->
                     <?php if ($data['currentPage'] < $data['totalPages']): ?>
                         <li class="page-item">
-                            <a class="page-link bg-dark border-secondary text-light" 
-                               href="<?= URLHelper::userReviews() ?>?page=<?= $data['currentPage'] + 1 ?>">
+                            <a class="page-link bg-dark border-secondary text-light"
+                                href="<?= URLHelper::userReviews() ?>?page=<?= $data['currentPage'] + 1 ?>">
                                 Sau <i class="fas fa-chevron-right"></i>
                             </a>
                         </li>

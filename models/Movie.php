@@ -202,20 +202,62 @@ class Movie extends Model {
     }
     
     /**
+     * Tạo slug từ tên phim
+     */
+    private function createSlug($title) {
+        // Chuyển thành chữ thường
+        $slug = strtolower($title);
+        
+        // Thay thế ký tự tiếng Việt
+        $vietnamese = array(
+            'à','á','ạ','ả','ã','â','ầ','ấ','ậ','ẩ','ẫ','ă','ằ','ắ','ặ','ẳ','ẵ',
+            'è','é','ẹ','ẻ','ẽ','ê','ề','ế','ệ','ể','ễ',
+            'ì','í','ị','ỉ','ĩ',
+            'ò','ó','ọ','ỏ','õ','ô','ồ','ố','ộ','ổ','ỗ','ơ','ờ','ớ','ợ','ở','ỡ',
+            'ù','ú','ụ','ủ','ũ','ư','ừ','ứ','ự','ử','ữ',
+            'ỳ','ý','ỵ','ỷ','ỹ',
+            'đ'
+        );
+        $latin = array(
+            'a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a',
+            'e','e','e','e','e','e','e','e','e','e','e',
+            'i','i','i','i','i',
+            'o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o',
+            'u','u','u','u','u','u','u','u','u','u','u',
+            'y','y','y','y','y',
+            'd'
+        );
+        $slug = str_replace($vietnamese, $latin, $slug);
+        
+        // Loại bỏ ký tự đặc biệt, chỉ giữ lại a-z, 0-9, và dấu gạch ngang
+        $slug = preg_replace('/[^a-z0-9\s-]/', '', $slug);
+        
+        // Thay khoảng trắng bằng dấu gạch ngang
+        $slug = preg_replace('/[\s-]+/', '-', $slug);
+        
+        // Loại bỏ dấu gạch ngang ở đầu và cuối
+        $slug = trim($slug, '-');
+        
+        return $slug;
+    }
+    
+    /**
      * Tạo phim mới (admin)
      */
     public function create($data) {
-        $sql = "INSERT INTO movies (title, description, release_year, director, cast, duration, genre_id, poster, created_at) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())";
+        $slug = $this->createSlug($data['title']);
+        $sql = "INSERT INTO movies (title, slug, description, release_year, director, cast, duration, genre_id, poster) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([
             $data['title'],
-            $data['description'],
-            $data['release_year'],
-            $data['director'],
-            $data['cast'],
-            $data['duration'],
-            $data['genre_id'],
+            $slug,
+            $data['description'] ?? null,
+            $data['release_year'] ?? null,
+            $data['director'] ?? null,
+            $data['cast'] ?? null,
+            $data['duration'] ?? null,
+            $data['genre_id'] ?? null,
             $data['poster'] ?? null
         ]);
     }
@@ -224,6 +266,11 @@ class Movie extends Model {
      * Cập nhật phim (admin)
      */
     public function update($id, $data) {
+        // Nếu có title thì tạo slug mới
+        if (isset($data['title'])) {
+            $data['slug'] = $this->createSlug($data['title']);
+        }
+        
         $fields = [];
         $params = [];
         

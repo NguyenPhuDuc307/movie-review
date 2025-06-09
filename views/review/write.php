@@ -13,12 +13,12 @@
                         <div class="row align-items-center">
                             <div class="col-auto">
                                 <?php if (!empty($movie['poster']) && file_exists(BASE_PATH . '/uploads/posters/' . $movie['poster'])): ?>
-                                    <img src="<?= URLHelper::poster($movie['poster']) ?>" 
-                                         class="rounded" alt="<?= htmlspecialchars($movie['title']) ?>" 
-                                         style="width: 100px; height: 120px; object-fit: cover;">
+                                    <img src="<?= URLHelper::poster($movie['poster']) ?>"
+                                        class="rounded" alt="<?= htmlspecialchars($movie['title']) ?>"
+                                        style="width: 100px; height: 120px; object-fit: cover;">
                                 <?php else: ?>
-                                    <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded" 
-                                         style="width: 100px; height: 120px;">
+                                    <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded"
+                                        style="width: 100px; height: 120px;">
                                         <div class="text-center">
                                             <i class="fas fa-film fa-lg"></i>
                                             <br><small>No poster</small>
@@ -37,35 +37,35 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Form review -->
                     <form method="POST">
                         <div class="mb-3">
                             <label class="form-label">Đánh giá <span class="text-danger">*</span></label>
                             <div class="rating-input mb-2">
                                 <?php for ($i = 5; $i >= 1; $i--): ?>
-                                    <input type="radio" id="star<?= $i ?>" name="rating" value="<?= $i ?>" 
-                                           <?= ($existingReview && $existingReview['rating'] == $i) ? 'checked' : '' ?> required>
+                                    <input type="radio" id="star<?= $i ?>" name="rating" value="<?= $i ?>"
+                                        <?= ($existingReview && $existingReview['rating'] == $i) ? 'checked' : '' ?> required>
                                     <label for="star<?= $i ?>" class="star-label">★</label>
                                 <?php endfor; ?>
                             </div>
                             <small class="form-text text-muted">Chọn từ 1 đến 5 sao</small>
                         </div>
-                        
+
                         <div class="mb-3">
                             <label for="title" class="form-label">Tiêu đề review <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="title" name="title" 
-                                   value="<?= htmlspecialchars($existingReview['title'] ?? '') ?>" 
-                                   placeholder="Nhập tiêu đề cho review của bạn" required>
+                            <input type="text" class="form-control" id="title" name="title"
+                                value="<?= htmlspecialchars($existingReview['title'] ?? '') ?>"
+                                placeholder="Nhập tiêu đề cho Đánh giá của bạn" required>
                         </div>
-                        
+
                         <div class="mb-3">
                             <label for="content" class="form-label">Nội dung review <span class="text-danger">*</span></label>
-                            <textarea class="form-control" id="content" name="content" rows="5" 
-                                      placeholder="Chia sẻ cảm nhận của bạn về bộ phim này (tối thiểu 50 ký tự)" required><?= htmlspecialchars($existingReview['content'] ?? '') ?></textarea>
+                            <textarea class="form-control" id="content" name="content" rows="5"
+                                placeholder="Chia sẻ cảm nhận của bạn về bộ phim này (tối thiểu 50 ký tự)" required><?= htmlspecialchars($existingReview['content'] ?? '') ?></textarea>
                             <small class="form-text text-muted">Tối thiểu 50 ký tự</small>
                         </div>
-                        
+
                         <div class="d-flex justify-content-between">
                             <a href="<?= URLHelper::movieDetail($movie['id']) ?>" class="btn btn-secondary">Hủy</a>
                             <button type="submit" class="btn btn-primary">

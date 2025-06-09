@@ -34,13 +34,55 @@ class Genre extends Model {
     }
     
     /**
+     * Tạo slug từ tên
+     */
+    private function createSlug($name) {
+        // Chuyển thành chữ thường
+        $slug = strtolower($name);
+        
+        // Thay thế ký tự tiếng Việt
+        $vietnamese = array(
+            'à','á','ạ','ả','ã','â','ầ','ấ','ậ','ẩ','ẫ','ă','ằ','ắ','ặ','ẳ','ẵ',
+            'è','é','ẹ','ẻ','ẽ','ê','ề','ế','ệ','ể','ễ',
+            'ì','í','ị','ỉ','ĩ',
+            'ò','ó','ọ','ỏ','õ','ô','ồ','ố','ộ','ổ','ỗ','ơ','ờ','ớ','ợ','ở','ỡ',
+            'ù','ú','ụ','ủ','ũ','ư','ừ','ứ','ự','ử','ữ',
+            'ỳ','ý','ỵ','ỷ','ỹ',
+            'đ'
+        );
+        $latin = array(
+            'a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a','a',
+            'e','e','e','e','e','e','e','e','e','e','e',
+            'i','i','i','i','i',
+            'o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o','o',
+            'u','u','u','u','u','u','u','u','u','u','u',
+            'y','y','y','y','y',
+            'd'
+        );
+        $slug = str_replace($vietnamese, $latin, $slug);
+        
+        // Loại bỏ ký tự đặc biệt, chỉ giữ lại a-z, 0-9, và dấu gạch ngang
+        $slug = preg_replace('/[^a-z0-9\s-]/', '', $slug);
+        
+        // Thay khoảng trắng bằng dấu gạch ngang
+        $slug = preg_replace('/[\s-]+/', '-', $slug);
+        
+        // Loại bỏ dấu gạch ngang ở đầu và cuối
+        $slug = trim($slug, '-');
+        
+        return $slug;
+    }
+    
+    /**
      * Tạo thể loại mới
      */
     public function createGenre($data) {
-        $sql = "INSERT INTO genres (name, description, created_at) VALUES (?, ?, NOW())";
+        $slug = $this->createSlug($data['name']);
+        $sql = "INSERT INTO genres (name, slug, description, created_at) VALUES (?, ?, ?, NOW())";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([
             $data['name'],
+            $slug,
             $data['description'] ?? null
         ]);
     }
@@ -49,10 +91,12 @@ class Genre extends Model {
      * Cập nhật thể loại
      */
     public function updateGenre($id, $data) {
-        $sql = "UPDATE genres SET name = ?, description = ?, updated_at = NOW() WHERE id = ?";
+        $slug = $this->createSlug($data['name']);
+        $sql = "UPDATE genres SET name = ?, slug = ?, description = ? WHERE id = ?";
         $stmt = $this->pdo->prepare($sql);
         return $stmt->execute([
             $data['name'],
+            $slug,
             $data['description'] ?? null,
             $id
         ]);

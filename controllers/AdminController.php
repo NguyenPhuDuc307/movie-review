@@ -118,9 +118,9 @@ class AdminController extends Controller {
             $data = [
                 'title' => $_POST['title'] ?? '',
                 'description' => $_POST['description'] ?? '',
-                'release_date' => $_POST['release_date'] ?? '',
+                'release_year' => $_POST['release_year'] ?? '',
                 'director' => $_POST['director'] ?? '',
-                'genre' => $_POST['genre'] ?? '',
+                'genre_id' => $_POST['genre_id'] ?? '',
                 'duration' => $_POST['duration'] ?? null,
                 'trailer_url' => $_POST['trailer_url'] ?? ''
             ];

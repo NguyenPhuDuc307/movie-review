@@ -3,7 +3,7 @@ session_start();
 
 // Định nghĩa các hằng số
 define('BASE_PATH', __DIR__);
-define('BASE_URL', 'https://tarpon-glorious-redfish.ngrok-free.app/movie-review');
+define('BASE_URL', 'http://localhost/movie-review');
 
 // Include các file cần thiết
 require_once 'config/database.php';
@@ -51,17 +51,17 @@ if (!empty($query_string)) {
 $uri_parts = explode('/', $uri);
 
 // Route mặc định
-$controller = 'Home'; 
+$controller = 'Home';
 $action = 'index';
 $params = array();
 
 // Phân tích route
 if (isset($uri_parts[0]) && !empty($uri_parts[0])) {
     $controller = ucfirst($uri_parts[0]);
-    
+
     if (isset($uri_parts[1]) && !empty($uri_parts[1])) {
         $action = $uri_parts[1];
-        
+
         // Các tham số còn lại là params
         if (count($uri_parts) > 2) {
             $params = array_slice($uri_parts, 2);
@@ -86,7 +86,7 @@ switch ($controller) {
             $action = 'index';
         }
         break;
-        
+
     case 'Discussion':
         // /discussion/123 -> discussion/detail/123
         if (is_numeric($action)) {
@@ -102,22 +102,22 @@ switch ($controller) {
             $action = 'index';
         }
         break;
-        
+
     case 'Review':
         // /review/write/123
         if ($action === 'write' && isset($params[0])) {
             $params[0] = (int)$params[0];
         }
         break;
-        
+
     case 'User':
         // Các action cho user
         break;
-        
+
     case 'Auth':
         // Các action cho authentication
         break;
-        
+
     case 'Admin':
         // /admin -> admin/index (dashboard)
         if ($action === 'index' || empty($action)) {
@@ -229,11 +229,6 @@ if (isset($shortcuts[$controller])) {
     list($controller, $action) = $shortcuts[$controller];
 }
 
-// Debug routing (có thể xóa sau)
-// echo "Controller: $controller, Action: $action, Params: "; print_r($params); echo "<br>";
-// echo "GET params: "; print_r($_GET); echo "<br>";
-// echo "URI: $uri<br>";
-// echo "URI Parts: "; print_r($uri_parts); echo "<br><br>";
 
 // Đường dẫn đến file controller
 $controller_file = 'controllers/' . $controller . 'Controller.php';
@@ -241,10 +236,10 @@ $controller_file = 'controllers/' . $controller . 'Controller.php';
 // Kiểm tra controller tồn tại
 if (file_exists($controller_file)) {
     require_once $controller_file;
-    
+
     $controller_class = $controller . 'Controller';
     $controller_instance = new $controller_class();
-    
+
     // Kiểm tra method tồn tại
     if (method_exists($controller_instance, $action)) {
         // Gọi method với params
@@ -257,4 +252,3 @@ if (file_exists($controller_file)) {
     // Controller không tồn tại
     require_once 'views/errors/404.php';
 }
-?>

@@ -24,13 +24,13 @@
                     <?php endif; ?>
 
                     <!-- Create Discussion Form -->
-                    <form method="POST" action="discussion/create">
+                    <form method="POST" action="<?php echo BASE_URL; ?>/discussion/create">
                         <div class="form-group mb-3">
                             <label for="title" class="form-label">Tiêu đề thảo luận <span class="text-danger">*</span></label>
-                            <input type="text" name="title" id="title" class="form-control" 
-                                   placeholder="Nhập tiêu đề thảo luận..."
-                                   value="<?= htmlspecialchars($_POST['title'] ?? '') ?>" 
-                                   required maxlength="200">
+                            <input type="text" name="title" id="title" class="form-control"
+                                placeholder="Nhập tiêu đề thảo luận..."
+                                value="<?= htmlspecialchars($_POST['title'] ?? '') ?>"
+                                required maxlength="200">
                             <div class="form-text">Tối đa 200 ký tự</div>
                         </div>
 
@@ -40,8 +40,8 @@
                                 <option value="">-- Chọn phim (nếu có) --</option>
                                 <?php if (isset($movies) && !empty($movies)): ?>
                                     <?php foreach ($movies as $movie): ?>
-                                        <option value="<?= $movie['id'] ?>" 
-                                                <?= ($_POST['movie_id'] ?? '') == $movie['id'] ? 'selected' : '' ?>>
+                                        <option value="<?= $movie['id'] ?>"
+                                            <?= ($_POST['movie_id'] ?? '') == $movie['id'] ? 'selected' : '' ?>>
                                             <?= htmlspecialchars($movie['title']) ?> (<?= $movie['release_year'] ?>)
                                         </option>
                                     <?php endforeach; ?>
@@ -52,11 +52,11 @@
 
                         <div class="form-group mb-3">
                             <label for="content" class="form-label">Nội dung thảo luận <span class="text-danger">*</span></label>
-                            <textarea name="content" id="content" class="form-control" rows="8" 
-                                      placeholder="Viết nội dung thảo luận của bạn..." 
-                                      required><?= htmlspecialchars($_POST['content'] ?? '') ?></textarea>
+                            <textarea name="content" id="content" class="form-control" rows="8"
+                                placeholder="Viết nội dung thảo luận của bạn..."
+                                required><?= htmlspecialchars($_POST['content'] ?? '') ?></textarea>
                             <div class="form-text">
-                                Hãy viết chi tiết về chủ đề bạn muốn thảo luận. 
+                                Hãy viết chi tiết về chủ đề bạn muốn thảo luận.
                                 Có thể bao gồm cảm nhận, phân tích, câu hỏi...
                             </div>
                         </div>
@@ -115,86 +115,91 @@
 </div>
 
 <style>
-/* Create discussion page specific fixes */
-.container * {
-    color: #f0f6fc !important;
-}
+    /* Create discussion page specific fixes */
+    .container * {
+        color: #f0f6fc !important;
+    }
 
-.text-muted, .small.text-muted {
-    color: #8b949e !important;
-}
+    .text-muted,
+    .small.text-muted {
+        color: #8b949e !important;
+    }
 
-h2, h3, h4, h5, h6 {
-    color: #f0f6fc !important;
-}
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: #f0f6fc !important;
+    }
 
-.form-label {
-    color: #f0f6fc !important;
-}
+    .form-label {
+        color: #f0f6fc !important;
+    }
 
-.form-text {
-    color: #8b949e !important;
-}
+    .form-text {
+        color: #8b949e !important;
+    }
 
-.form-control {
-    background-color: #21262d !important;
-    border: 1px solid #30363d !important;
-    color: #f0f6fc !important;
-}
+    .form-control {
+        background-color: #21262d !important;
+        border: 1px solid #30363d !important;
+        color: #f0f6fc !important;
+    }
 
-.form-control::placeholder {
-    color: #8b949e !important;
-}
+    .form-control::placeholder {
+        color: #8b949e !important;
+    }
 
-.btn {
-    color: white !important;
-}
+    .btn {
+        color: white !important;
+    }
 
-.btn-primary {
-    background-color: #238636 !important;
-    border-color: #238636 !important;
-    color: #ffffff !important;
-}
+    .btn-primary {
+        background-color: #238636 !important;
+        border-color: #238636 !important;
+        color: #ffffff !important;
+    }
 
-.btn-primary:hover {
-    background-color: #2ea043 !important;
-    border-color: #2ea043 !important;
-    color: #ffffff !important;
-}
+    .btn-primary:hover {
+        background-color: #2ea043 !important;
+        border-color: #2ea043 !important;
+        color: #ffffff !important;
+    }
 
-.btn-outline-secondary {
-    color: #8b949e !important;
-    border-color: #30363d !important;
-    background-color: transparent !important;
-}
+    .btn-outline-secondary {
+        color: #8b949e !important;
+        border-color: #30363d !important;
+        background-color: transparent !important;
+    }
 
-.btn-outline-secondary:hover {
-    color: #ffffff !important;
-    background-color: #30363d !important;
-    border-color: #30363d !important;
-}
+    .btn-outline-secondary:hover {
+        color: #ffffff !important;
+        background-color: #30363d !important;
+        border-color: #30363d !important;
+    }
 
-.alert-info {
-    background-color: #1e3a5f !important;
-    color: #58a6ff !important;
-    border-left: 4px solid #58a6ff !important;
-}
+    .alert-info {
+        background-color: #1e3a5f !important;
+        color: #58a6ff !important;
+        border-left: 4px solid #58a6ff !important;
+    }
 
-.card {
-    background-color: #161b22 !important;
-    border: 1px solid #30363d !important;
-}
+    .card {
+        background-color: #161b22 !important;
+        border: 1px solid #30363d !important;
+    }
 
-.card-header {
-    background-color: #161b22 !important;
-    border-bottom: 1px solid #30363d !important;
-    color: #f0f6fc !important;
-}
+    .card-header {
+        background-color: #161b22 !important;
+        border-bottom: 1px solid #30363d !important;
+        color: #f0f6fc !important;
+    }
 
-.card-body {
-    background-color: #161b22 !important;
-    color: #f0f6fc !important;
-}
+    .card-body {
+        background-color: #161b22 !important;
+        color: #f0f6fc !important;
+    }
 </style>
 
 <?php include BASE_PATH . '/views/layouts/footer.php'; ?>
