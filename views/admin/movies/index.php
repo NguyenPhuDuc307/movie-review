@@ -1,7 +1,7 @@
-<?php 
+<?php
 $current_page = 'movies';
 $title = "Quản lý phim - Admin Panel";
-include BASE_PATH . '/views/layouts/admin_header.php'; 
+include BASE_PATH . '/views/layouts/admin_header.php';
 ?>
 
 <div class="container-fluid mt-4">
@@ -29,14 +29,14 @@ include BASE_PATH . '/views/layouts/admin_header.php';
                 </div>
                 <?php unset($_SESSION['error']); ?>
             <?php endif; ?>
-                
+
             <!-- Tìm kiếm -->
             <div class="row mb-3">
                 <div class="col-md-6">
                     <form method="GET" action="<?= URLHelper::adminMovies() ?>">
                         <div class="input-group">
-                            <input type="text" name="search" class="form-control" 
-                                   placeholder="Tìm kiếm phim..." value="<?= htmlspecialchars($search ?? '') ?>">
+                            <input type="text" name="search" class="form-control"
+                                placeholder="Tìm kiếm phim..." value="<?= htmlspecialchars($search ?? '') ?>">
                             <button class="btn btn-primary" type="submit">
                                 <i class="fas fa-search"></i> Tìm kiếm
                             </button>
@@ -44,7 +44,7 @@ include BASE_PATH . '/views/layouts/admin_header.php';
                     </form>
                 </div>
             </div>
-                
+
             <!-- Bảng phim -->
             <?php if (!empty($movies)): ?>
                 <div class="card">
@@ -72,24 +72,25 @@ include BASE_PATH . '/views/layouts/admin_header.php';
                                             <td><?= $movie['id'] ?></td>
                                             <td>
                                                 <?php if (!empty($movie['poster'])): ?>
-                                                    <img src="<?= URLHelper::poster($movie['poster']) ?>" 
-                                                         alt="<?= htmlspecialchars($movie['title']) ?>" 
-                                                         class="img-thumbnail"
-                                                         style="width: 50px; height: 60px; object-fit: cover;">
+                                                    <img src="<?= URLHelper::poster($movie['poster']) ?>"
+                                                        alt="<?= htmlspecialchars($movie['title']) ?>"
+                                                        class="img-thumbnail"
+                                                        style="width: 50px; height: 60px; object-fit: cover;">
                                                 <?php else: ?>
-                                                    <div class="bg-secondary text-white d-flex align-items-center justify-content-center" 
-                                                         style="width: 50px; height: 60px; font-size: 12px;">
+                                                    <div class="bg-secondary text-white d-flex align-items-center justify-content-center"
+                                                        style="width: 50px; height: 60px; font-size: 12px;">
                                                         No Image
                                                     </div>
                                                 <?php endif; ?>
-                                            </td>                            <td>
-                                <strong><?= htmlspecialchars($movie['title']) ?></strong><br>
-                                <small class="text-muted">
-                                    Đạo diễn: <?= htmlspecialchars($movie['director'] ?? 'Chưa cập nhật') ?>
-                                </small>
-                            </td>
-                            <td><?= htmlspecialchars($movie['genre_name'] ?? 'Chưa phân loại') ?></td>
-                            <td><?= htmlspecialchars($movie['release_year'] ?? 'N/A') ?></td>
+                                            </td>
+                                            <td>
+                                                <strong><?= htmlspecialchars($movie['title']) ?></strong><br>
+                                                <small class="text-muted">
+                                                    Đạo diễn: <?= htmlspecialchars($movie['director'] ?? 'Chưa cập nhật') ?>
+                                                </small>
+                                            </td>
+                                            <td><?= htmlspecialchars($movie['genre_name'] ?? 'Chưa phân loại') ?></td>
+                                            <td><?= htmlspecialchars($movie['release_year'] ?? 'N/A') ?></td>
                                             <td>
                                                 <span class="badge bg-info"><?= $movie['review_count'] ?? 0 ?></span>
                                             </td>
@@ -105,17 +106,17 @@ include BASE_PATH . '/views/layouts/admin_header.php';
                                             </td>
                                             <td>
                                                 <div class="btn-group btn-group-sm" role="group">
-                                                    <a href="<?= URLHelper::movieDetail($movie['id']) ?>" 
-                                                       class="btn btn-outline-info" target="_blank" title="Xem chi tiết">
+                                                    <a href="<?= URLHelper::movieDetail($movie['id']) ?>"
+                                                        class="btn btn-outline-info" target="_blank" title="Xem chi tiết">
                                                         <i class="fas fa-eye"></i>
                                                     </a>
-                                                    <a href="<?= URLHelper::adminEditMovie($movie['id']) ?>" 
-                                                       class="btn btn-outline-warning" title="Chỉnh sửa">
+                                                    <a href="<?= URLHelper::adminEditMovie($movie['id']) ?>"
+                                                        class="btn btn-outline-warning" title="Chỉnh sửa">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
-                                                    <a href="<?= URLHelper::adminDeleteMovie($movie['id']) ?>" 
-                                                       class="btn btn-outline-danger" title="Xóa"
-                                                       onclick="return confirm('Bạn có chắc muốn xóa phim này?')">
+                                                    <a href="<?= URLHelper::adminDeleteMovie($movie['id']) ?>"
+                                                        class="btn btn-outline-danger" title="Xóa"
+                                                        onclick="return confirm('Bạn có chắc muốn xóa phim này?')">
                                                         <i class="fas fa-trash"></i>
                                                     </a>
                                                 </div>
@@ -125,7 +126,7 @@ include BASE_PATH . '/views/layouts/admin_header.php';
                                 </tbody>
                             </table>
                         </div>
-                        
+
                         <!-- Phân trang -->
                         <?php if (isset($totalPages) && $totalPages > 1): ?>
                             <nav class="mt-3">
@@ -144,7 +145,7 @@ include BASE_PATH . '/views/layouts/admin_header.php';
                 </div>
             <?php else: ?>
                 <div class="alert alert-info">
-                    <i class="fas fa-info-circle"></i> 
+                    <i class="fas fa-info-circle"></i>
                     <?= !empty($search) ? 'Không tìm thấy phim nào với từ khóa này.' : 'Chưa có phim nào trong hệ thống.' ?>
                 </div>
             <?php endif; ?>

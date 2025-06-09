@@ -1,14 +1,16 @@
 <?php
 
-class AdminController extends Controller {
-    
+class AdminController extends Controller
+{
+
     private $movieModel;
     private $userModel;
     private $reviewModel;
     private $genreModel;
     private $discussionModel;
-    
-    public function __construct() {
+
+    public function __construct()
+    {
         $this->checkAdminAuth();
         $this->movieModel = new Movie();
         $this->userModel = new User();
@@ -16,20 +18,22 @@ class AdminController extends Controller {
         $this->genreModel = new Genre();
         $this->discussionModel = new Discussion();
     }
-    
+
     /**
      * Kiểm tra quyền admin
      */
-    private function checkAdminAuth() {
+    private function checkAdminAuth()
+    {
         if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
             URLHelper::redirect(URLHelper::login());
         }
     }
-    
+
     /**
      * Trang chính admin
      */
-    public function index() {
+    public function index()
+    {
         $stats = [
             'total_movies' => $this->movieModel->getTotalCount(),
             'total_users' => $this->userModel->getTotalCount(),
@@ -40,23 +44,24 @@ class AdminController extends Controller {
             'recent_reviews' => $this->reviewModel->getRecent(5),
             'recent_discussions' => $this->discussionModel->getLatest(5)
         ];
-        
+
         $this->view('admin/dashboard', $stats);
     }
-    
+
     /**
      * Quản lý phim
      */
-    public function movies() {
+    public function movies()
+    {
         $search = $_GET['search'] ?? '';
         $page = (int)($_GET['page'] ?? 1);
         $limit = 10;
         $offset = ($page - 1) * $limit;
-        
+
         $movies = $this->movieModel->getForAdmin($search, $limit, $offset);
         $totalMovies = $this->movieModel->getTotalCount($search);
         $totalPages = ceil($totalMovies / $limit);
-        
+
         $this->view('admin/movies/index', [
             'movies' => $movies,
             'currentPage' => $page,
@@ -64,11 +69,12 @@ class AdminController extends Controller {
             'search' => $search
         ]);
     }
-    
+
     /**
      * Thêm phim mới
      */
-    public function createMovie() {
+    public function createMovie()
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
                 'title' => $_POST['title'] ?? '',
@@ -79,7 +85,7 @@ class AdminController extends Controller {
                 'duration' => $_POST['duration'] ?? null,
                 'genre_id' => $_POST['genre_id'] ?? null
             ];
-            
+
             // Xử lý upload poster
             if (isset($_FILES['poster']) && $_FILES['poster']['error'] === 0) {
                 $uploadResult = $this->uploadPoster($_FILES['poster']);
@@ -91,7 +97,7 @@ class AdminController extends Controller {
                     return;
                 }
             }
-            
+
             if ($this->movieModel->create($data)) {
                 $_SESSION['success'] = 'Thêm phim thành công!';
                 URLHelper::redirect(URLHelper::adminMovies());
@@ -99,21 +105,22 @@ class AdminController extends Controller {
                 $_SESSION['error'] = 'Có lỗi xảy ra!';
             }
         }
-        
+
         $genres = $this->movieModel->getGenres();
         $this->view('admin/movies/create', ['genres' => $genres]);
     }
-    
+
     /**
      * Sửa phim
      */
-    public function editMovie($id) {
+    public function editMovie($id)
+    {
         $movie = $this->movieModel->findById($id);
         if (!$movie) {
             $_SESSION['error'] = 'Không tìm thấy phim!';
             URLHelper::redirect(URLHelper::adminMovies());
         }
-        
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
                 'title' => $_POST['title'] ?? '',
@@ -124,7 +131,7 @@ class AdminController extends Controller {
                 'duration' => $_POST['duration'] ?? null,
                 'trailer_url' => $_POST['trailer_url'] ?? ''
             ];
-            
+
             // Xử lý upload poster mới
             if (isset($_FILES['poster']) && $_FILES['poster']['error'] === 0) {
                 $uploadResult = $this->uploadPoster($_FILES['poster']);
@@ -141,7 +148,7 @@ class AdminController extends Controller {
                     return;
                 }
             }
-            
+
             if ($this->movieModel->update($id, $data)) {
                 $_SESSION['success'] = 'Cập nhật phim thành công!';
                 URLHelper::redirect(URLHelper::adminMovies());
@@ -149,21 +156,22 @@ class AdminController extends Controller {
                 $_SESSION['error'] = 'Có lỗi xảy ra!';
             }
         }
-        
+
         $genres = $this->movieModel->getGenres();
         $this->view('admin/movies/edit', ['movie' => $movie, 'genres' => $genres]);
     }
-    
+
     /**
      * Xóa phim
      */
-    public function deleteMovie($id) {
+    public function deleteMovie($id)
+    {
         $movie = $this->movieModel->findById($id);
         if (!$movie) {
             $_SESSION['error'] = 'Không tìm thấy phim!';
             URLHelper::redirect(URLHelper::adminMovies());
         }
-        
+
         if ($this->movieModel->delete($id)) {
             // Xóa poster
             if ($movie['poster'] && file_exists(BASE_PATH . '/uploads/posters/' . $movie['poster'])) {
@@ -173,23 +181,24 @@ class AdminController extends Controller {
         } else {
             $_SESSION['error'] = 'Có lỗi xảy ra!';
         }
-        
+
         URLHelper::redirect(URLHelper::adminMovies());
     }
-    
+
     /**
      * Quản lý người dùng
      */
-    public function users() {
+    public function users()
+    {
         $search = $_GET['search'] ?? '';
         $page = (int)($_GET['page'] ?? 1);
         $limit = 10;
         $offset = ($page - 1) * $limit;
-        
+
         $users = $this->userModel->getForAdmin($search, $limit, $offset);
         $totalUsers = $this->userModel->getTotalCount($search);
         $totalPages = ceil($totalUsers / $limit);
-        
+
         $this->view('admin/users/index', [
             'users' => $users,
             'currentPage' => $page,
@@ -197,38 +206,40 @@ class AdminController extends Controller {
             'search' => $search
         ]);
     }
-    
+
     /**
      * Xóa người dùng
      */
-    public function deleteUser($id) {
+    public function deleteUser($id)
+    {
         if ($id == $_SESSION['user_id']) {
             $_SESSION['error'] = 'Không thể xóa chính mình!';
             URLHelper::redirect(URLHelper::adminUsers());
         }
-        
+
         if ($this->userModel->delete($id)) {
             $_SESSION['success'] = 'Xóa người dùng thành công!';
         } else {
             $_SESSION['error'] = 'Có lỗi xảy ra!';
         }
-        
+
         URLHelper::redirect(URLHelper::adminUsers());
     }
-    
+
     /**
      * Quản lý reviews
      */
-    public function reviews() {
+    public function reviews()
+    {
         $search = $_GET['search'] ?? '';
         $page = (int)($_GET['page'] ?? 1);
         $limit = 10;
         $offset = ($page - 1) * $limit;
-        
+
         $reviews = $this->reviewModel->getForAdmin($search, $limit, $offset);
         $totalReviews = $this->reviewModel->getTotalCount($search);
         $totalPages = ceil($totalReviews / $limit);
-        
+
         $this->view('admin/reviews/index', [
             'reviews' => $reviews,
             'currentPage' => $page,
@@ -236,85 +247,90 @@ class AdminController extends Controller {
             'search' => $search
         ]);
     }
-    
+
     /**
      * Duyệt review
      */
-    public function approveReview($id) {
+    public function approveReview($id)
+    {
         if ($this->reviewModel->updateStatus($id, 'approved')) {
             $_SESSION['success'] = 'Duyệt review thành công!';
         } else {
             $_SESSION['error'] = 'Có lỗi xảy ra!';
         }
-        
+
         URLHelper::redirect(URLHelper::adminReviews());
     }
-    
+
     /**
      * Từ chối review
      */
-    public function rejectReview($id) {
+    public function rejectReview($id)
+    {
         if ($this->reviewModel->updateStatus($id, 'rejected')) {
             $_SESSION['success'] = 'Từ chối review thành công!';
         } else {
             $_SESSION['error'] = 'Có lỗi xảy ra!';
         }
-        
+
         URLHelper::redirect(URLHelper::adminReviews());
     }
-    
+
     /**
      * Xóa review
      */
-    public function deleteReview($id) {
+    public function deleteReview($id)
+    {
         if ($this->reviewModel->delete($id)) {
             $_SESSION['success'] = 'Xóa review thành công!';
         } else {
             $_SESSION['error'] = 'Có lỗi xảy ra!';
         }
-        
+
         URLHelper::redirect(URLHelper::adminReviews());
     }
-    
+
     /**
      * Upload poster
      */
-    private function uploadPoster($file) {
+    private function uploadPoster($file)
+    {
         $uploadDir = BASE_PATH . '/uploads/posters/';
         $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
         $maxSize = 5 * 1024 * 1024; // 5MB
-        
+
         if (!in_array($file['type'], $allowedTypes)) {
             return ['success' => false, 'message' => 'Chỉ chấp nhận file JPG, JPEG, PNG'];
         }
-        
+
         if ($file['size'] > $maxSize) {
             return ['success' => false, 'message' => 'File quá lớn. Tối đa 5MB'];
         }
-        
+
         $filename = time() . '_' . uniqid() . '.' . pathinfo($file['name'], PATHINFO_EXTENSION);
         $uploadPath = $uploadDir . $filename;
-        
+
         if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
             return ['success' => true, 'filename' => $filename];
         }
-        
+
         return ['success' => false, 'message' => 'Không thể upload file'];
     }
 
     /**
      * Quản lý thể loại
      */
-    public function genres() {
+    public function genres()
+    {
         $search = $_GET['search'] ?? '';
         $page = (int)($_GET['page'] ?? 1);
         $limit = 10;
         $offset = ($page - 1) * $limit;
-        
+
         $genres = $this->genreModel->getForAdmin($search, $limit, $offset);
         $totalGenres = $this->genreModel->getTotalCount($search);
         $totalPages = ceil($totalGenres / $limit);
-        
+
         $this->view('admin/genres/index', [
             'genres' => $genres,
             'currentPage' => $page,
@@ -326,7 +342,8 @@ class AdminController extends Controller {
     /**
      * Thêm thể loại mới
      */
-    public function createGenre() {
+    public function createGenre()
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
                 'name' => trim($_POST['name']),
@@ -359,7 +376,8 @@ class AdminController extends Controller {
     /**
      * Sửa thể loại
      */
-    public function editGenre($id) {
+    public function editGenre($id)
+    {
         $genre = $this->genreModel->getById($id);
         if (!$genre) {
             $_SESSION['error'] = 'Không tìm thấy thể loại!';
@@ -398,7 +416,8 @@ class AdminController extends Controller {
     /**
      * Xóa thể loại
      */
-    public function deleteGenre($id) {
+    public function deleteGenre($id)
+    {
         $genre = $this->genreModel->getById($id);
         if (!$genre) {
             $_SESSION['error'] = 'Không tìm thấy thể loại!';
@@ -419,20 +438,21 @@ class AdminController extends Controller {
 
         URLHelper::redirect(URLHelper::adminGenres());
     }
-    
+
     /**
      * Quản lý thảo luận
      */
-    public function discussions() {
+    public function discussions()
+    {
         $search = $_GET['search'] ?? '';
         $page = (int)($_GET['page'] ?? 1);
         $limit = 10;
         $offset = ($page - 1) * $limit;
-        
+
         $discussions = $this->discussionModel->getForAdmin($search, $limit, $offset);
         $total = $this->discussionModel->getTotalCount($search);
         $totalPages = ceil($total / $limit);
-        
+
         $data = [
             'discussions' => $discussions,
             'search' => $search,
@@ -440,20 +460,21 @@ class AdminController extends Controller {
             'totalPages' => $totalPages,
             'total' => $total
         ];
-        
+
         $this->view('admin/discussions/index', $data);
     }
-    
+
     /**
      * Xóa thảo luận
      */
-    public function deleteDiscussion($id) {
+    public function deleteDiscussion($id)
+    {
         if ($this->discussionModel->delete($id)) {
             $_SESSION['success'] = 'Xóa thảo luận thành công!';
         } else {
             $_SESSION['error'] = 'Có lỗi xảy ra!';
         }
-        
+
         URLHelper::redirect(URLHelper::adminDiscussions());
     }
 }
